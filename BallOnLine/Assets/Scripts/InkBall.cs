@@ -2,19 +2,16 @@ using UnityEngine;
 
 public class InkBall : MonoBehaviour, IInteractable
 {
-    private DrawingManager drawingManager;
-
-    private void Start()
-    {
-        drawingManager = FindAnyObjectByType<DrawingManager>();
-    }
     public void Interact(BallController ball)
     {
-        DrawingManager.inkAmount += 10f;
-        if (drawingManager != null)
+        // LevelManager üzerinden veri çekimi
+        DrawingManager.inkAmount += LevelManager.Instance.currentLevel.inkBallAmount;
+
+        if (DrawingManager.Instance != null)
         {
-            drawingManager.UpdateDrawingProgressBar();
+            DrawingManager.Instance.UpdateDrawingProgressBar();
         }
+
         Destroy(gameObject);
     }
 }

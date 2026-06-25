@@ -6,15 +6,23 @@ public class BallScaler : MonoBehaviour, IInteractable
 
     public float sizeMultiplier = 1.5f; // Inspector'dan ayarlanabilir
 
+    private void Start()
+    {
+        // currentLevel yerine LevelManager.Instance.currentLevel kullanýyoruz
+        switch (scaleType)
+        {
+            case ScaleType.Grow:
+                sizeMultiplier = LevelManager.Instance.currentLevel.magnifyMultiplier;
+                break;
+            case ScaleType.Shrink:
+                sizeMultiplier = LevelManager.Instance.currentLevel.shrinkMultiplier;
+                break;
+        }
+    }
+
     public void Interact(BallController ball)
     {
-        // 1. Topu büyüt
         ball.ChangeSize(sizeMultiplier);
-
-        // 2. Efekt oynat (Opsiyonel)
-        // ParticleManager.PlayGrowEffect(transform.position);
-
-        // 3. Kendini yok et (veya Object Pool'a geri gönder)
         Destroy(gameObject);
     }
 

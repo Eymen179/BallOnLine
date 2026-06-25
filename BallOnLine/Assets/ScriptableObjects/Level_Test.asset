@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daaf321716bac740a661736fda8c723, type: 3}
+  m_Name: Level_Test
+  m_EditorClassIdentifier: 
+  levelName: Level_Test
+  isInkLimited: 1
+  maxInkAmount: 100
+  inkBallAmount: 10
+  FreezeStartCount: 3
+  ShieldStartCount: 3
+  FreezeRefillCount: 7
+  ShieldRefillCount: 4
+  magnifyMultiplier: 1.5
+  shrinkMultiplier: 0.5
+  shootingSpeed: 1

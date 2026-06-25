@@ -7,6 +7,8 @@ using UnityEngine.InputSystem; // Yeni Input System kütüphanesi eklendi
 
 public class DrawingManager : MonoBehaviour
 {
+    public static DrawingManager Instance { get; private set; }
+
     [Header("Line Settings")]
     public GameObject linePrefab;
     private GameObject currentLine;
@@ -20,7 +22,8 @@ public class DrawingManager : MonoBehaviour
 
     [Header("Ink Settings")]
     public int lineCount = 0;
-    public static float inkAmount = 100f;
+    public static float inkAmount;
+    public static float maxInkAmount = 100f;
     public float inkDecreaseRate = -0.2f; // Çizim sýrasýnda mürekkep azalým hýzý
     public TextMeshProUGUI inkAmountText;
 
@@ -28,9 +31,15 @@ public class DrawingManager : MonoBehaviour
     // Butona basýldýðýnda bu deðeri GameManager veya UI üzerinden 'true' yapmalýsýn.
     public bool isGameActive = false;
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
     private void Start()
     {
-
+        maxInkAmount = LevelManager.Instance.currentLevel.maxInkAmount;
+        inkAmount = maxInkAmount;
     }
 
     void Update()
@@ -112,21 +121,20 @@ public class DrawingManager : MonoBehaviour
     {
         if (UIManager.Instance.inkAmountBar != null)
         {
-            UIManager.Instance.inkAmountBar.value = inkAmount / 100f;
+            UIManager.Instance.inkAmountBar.value = inkAmount / maxInkAmount;
         }
     }
 
     public void UpdateInkAmount(float addedAmount)
     {
-        inkAmount += addedAmount;
-
-        if(inkAmount > 100f)
+        if (LevelManager.Instance.currentLevel.isInkLimited)
         {
-            inkAmount = 100f;
+            inkAmount += addedAmount;
         }
-    }
-    void InkLimitControl()
-    {
 
+        if(inkAmount > maxInkAmount)
+        {
+            inkAmount = maxInkAmount;
+        }
     }
 }

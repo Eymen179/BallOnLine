@@ -5,15 +5,15 @@ public class ButtonSkillManager : MonoBehaviour
 {
     public static ButtonSkillManager Instance;
 
-    public static int freezeAmount = 3;
-    public static int shieldAmount = 3;
+    public static int freezeCount = 3;
+    public static int shieldCount = 3;
 
     public GameObject ball;
 
     private Rigidbody2D ballRb;
     private GameObject shieldObject;
     public bool isShieldActive = false;
-    public int shieldTime = 5; // Kalkanýn aktif kalma süresi (saniye)
+    public int shieldTime = 5;
 
     private void Awake()
     {
@@ -29,48 +29,50 @@ public class ButtonSkillManager : MonoBehaviour
 
     private void Start()
     {
-        // Component'leri her seferinde aratmamak için Start'ta bir kere tanýmlýyoruz (Performans için)
         ballRb = ball.GetComponent<Rigidbody2D>();
         shieldObject = ball.transform.Find("Shield").gameObject;
+
+        // Baþlangýç deðerlerini yöneticiden çekiyoruz
+        freezeCount = LevelManager.Instance.currentLevel.FreezeStartCount;
+        shieldCount = LevelManager.Instance.currentLevel.ShieldStartCount;
+
+        UIManager.Instance.txtFreezeAmount.text = "x" + freezeCount.ToString();
+        UIManager.Instance.txtShieldAmount.text = "x" + shieldCount.ToString();
     }
 
-    //Freeze Button
+    // --- Diðer metotlarýn ayný þekilde kalýyor (OnFreezePointerDown, OnFreezePointerUp, ShieldButton vs.) ---
+
     public void OnFreezePointerDown()
     {
-        if (freezeAmount > 0)
+        if (freezeCount > 0)
         {
-            UpdateFreezeAmount(-1); // Hakký 1 azalt
-            ballRb.constraints = RigidbodyConstraints2D.FreezeAll; // Topu dondur
+            UpdateFreezeCount(-1);
+            ballRb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 
-    // Bu metot butondan PARMAK ÇEKÝLDÝÐÝ AN çalýþacak
     public void OnFreezePointerUp()
     {
-        // Topun fiziksel hareketini geri veriyoruz.
-        // Eðer topun Z ekseninde dönmesini istemiyorsan RigidbodyConstraints2D.FreezeRotationZ yapmalýsýn.
         ballRb.constraints = RigidbodyConstraints2D.None;
-        ballRb.WakeUp(); // Topu zorla uyandýrýp fiziði tekrar hesaplamasýný saðlar
+        ballRb.WakeUp();
     }
 
-    //Shield Button
     public void ShieldButton()
     {
-        if (shieldAmount > 0 && !isShieldActive)
+        if (shieldCount > 0 && !isShieldActive)
         {
-            UpdateShieldAmount(-1); // Hakký 1 azalt
-            StartCoroutine(ShieldRoutine()); // 5 saniyelik sayacý baþlat
+            UpdateShieldCount(-1);
+            StartCoroutine(ShieldRoutine());
         }
     }
+
     private IEnumerator ShieldRoutine()
     {
         isShieldActive = true;
-        shieldObject.SetActive(true); // Kalkaný aç
+        shieldObject.SetActive(true);
 
-        // 5 saniye boyunca bekle (Oyun duraklatýlýrsa sayma da duraklatýlýr)
         yield return new WaitForSeconds(shieldTime);
 
-        // 5 saniye dolduktan sonra eðer top hala sahada duruyorsa kalkaný kapat
         if (shieldObject != null)
         {
             shieldObject.SetActive(false);
@@ -79,17 +81,17 @@ public class ButtonSkillManager : MonoBehaviour
         isShieldActive = false;
     }
 
-    //Skill Amount Update Methods
-    public void UpdateFreezeAmount(int amount)
+    public void UpdateFreezeCount(int amount)
     {
-        freezeAmount += amount;
-        if (freezeAmount < 0) freezeAmount = 0;
-        UIManager.Instance.txtFreezeAmount.text = "x" + freezeAmount.ToString();
+        freezeCount += amount;
+        if (freezeCount < 0) freezeCount = 0;
+        UIManager.Instance.txtFreezeAmount.text = "x" + freezeCount.ToString();
     }
-    public void UpdateShieldAmount(int amount)
+
+    public void UpdateShieldCount(int amount)
     {
-        shieldAmount += amount;
-        if (shieldAmount < 0) shieldAmount = 0;
-        UIManager.Instance.txtShieldAmount.text = "x" + shieldAmount.ToString();
+        shieldCount += amount;
+        if (shieldCount < 0) shieldCount = 0;
+        UIManager.Instance.txtShieldAmount.text = "x" + shieldCount.ToString();
     }
 }

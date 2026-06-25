@@ -4,17 +4,17 @@ public class HazardItem : MonoBehaviour, IInteractable
 {
     public HazardType hazardType = HazardType.Spike;
 
-    private ButtonSkillManager buttonSkillManager;
+    private PolygonCollider2D spikeCol;
 
     private void Start()
     {
-        buttonSkillManager = FindAnyObjectByType<ButtonSkillManager>();
+        spikeCol = GetComponent<PolygonCollider2D>();
     }
     public void Interact(BallController ball)
     {
-        if (buttonSkillManager != null)
+        if (ButtonSkillManager.Instance != null)
         {
-            if (!buttonSkillManager.isShieldActive)
+            if (!ButtonSkillManager.Instance.isShieldActive)
             {
                 if (hazardType == HazardType.Spike)
                 {
@@ -33,7 +33,6 @@ public class HazardItem : MonoBehaviour, IInteractable
     }
     public void IsSpikeTrigger(bool isTrigger)
     {
-        PolygonCollider2D spikeCol = gameObject.GetComponent<PolygonCollider2D>();
         if (spikeCol != null)
         {
             spikeCol.isTrigger = isTrigger;

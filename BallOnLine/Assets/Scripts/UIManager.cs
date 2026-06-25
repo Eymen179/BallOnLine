@@ -33,10 +33,22 @@ public class UIManager : MonoBehaviour
     }
     void Start()
     {
-        txtFreezeAmount.text = "x" +  ButtonSkillManager.freezeAmount.ToString();
-        txtShieldAmount.text = "x" + ButtonSkillManager.shieldAmount.ToString();
+        txtFreezeAmount.text = "x" +  ButtonSkillManager.freezeCount.ToString();
+        txtShieldAmount.text = "x" + ButtonSkillManager.shieldCount.ToString();
 
         txtCoinAmount.text = "0";
+
+        if (LevelManager.Instance.currentLevel != null)
+        {
+            if (LevelManager.Instance.currentLevel.isInkLimited)
+            {
+                inkAmountBar.gameObject.SetActive(true);
+            }
+            else
+            {
+                inkAmountBar.gameObject.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame
