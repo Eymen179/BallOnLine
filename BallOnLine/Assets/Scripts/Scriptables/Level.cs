@@ -5,6 +5,8 @@ public class Level : ScriptableObject
 {
     public string levelName;
 
+    public levelAxis axis = levelAxis.YAxis;
+
     public bool isInkLimited = false;
     public float maxInkAmount = 100f;
     public float inkBallAmount = 10f;
@@ -18,4 +20,10 @@ public class Level : ScriptableObject
     public float shrinkMultiplier = 0.5f;
 
     public float shootingSpeed = 1.0f;
+
+    public enum levelAxis
+    {
+        XAxis,
+        YAxis
+    }
 }

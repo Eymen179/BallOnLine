@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI txtFreezeAmount;
     public TextMeshProUGUI txtShieldAmount;
 
+    [Header("Before Level Start")]
+    public GameObject btnStartLevel;
+
+
     private void Awake()
     {
         if (Instance == null)
