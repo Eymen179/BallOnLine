@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - Magnifyer
   - Shrinker
+  - Portal
+  - Trampoline
   layers:
   - Default
   - TransparentFX

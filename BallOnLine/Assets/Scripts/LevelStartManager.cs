@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Yeni Input System
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement; // Yeni Input System
 
 public class LevelStartManager : MonoBehaviour
 {
