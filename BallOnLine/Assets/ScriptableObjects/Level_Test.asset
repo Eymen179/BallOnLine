@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daaf321716bac740a661736fda8c723, type: 3}
   m_Name: Level_Test
   m_EditorClassIdentifier: 
-  levelName: Level_Test
+  levelName: Level1
+  levelIndex: 1
   axis: 1
   isInkLimited: 1
   maxInkAmount: 100

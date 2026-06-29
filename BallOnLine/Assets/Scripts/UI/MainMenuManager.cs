@@ -34,11 +34,15 @@ public class MainMenuManager : MonoBehaviour
     {
         
     }
-
+    //-------------------------------------------------------------------------------
     public void Button_Start()
     {
+        // Kaydedilmiþ son açýk leveli al (Hiç oynanmamýþsa 1 gelir)
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
 
-        SceneController.Instance.LoadCurrentLevel(LevelManager.Instance.currentLevel.levelName);
+        // Ýlgili sahneyi yükle
+        //SceneController.Instance.LoadScene("Level" + unlockedLevel);
+        SceneController.Instance.LoadScene("TestScene " + unlockedLevel);
     }
     public void Button_Levels()
     {

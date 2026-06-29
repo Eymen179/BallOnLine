@@ -4,6 +4,7 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
     public string levelName;
+    public int levelIndex;
 
     public levelAxis axis = levelAxis.YAxis;
 
