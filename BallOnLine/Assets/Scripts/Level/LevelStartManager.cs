@@ -80,6 +80,8 @@ public class LevelStartManager : MonoBehaviour
         if (UIManager.Instance != null && UIManager.Instance.btnStartLevel != null)
         {
             UIManager.Instance.btnStartLevel.SetActive(false);
+
+            UIManager.Instance.pnlBottomUIBlocker.SetActive(false); // Alt UI engelleyiciyi kaldýr
         }
 
         // 3. FÝZÝKLERÝ VE ÇÝZÝMÝ AKTÝF ETME

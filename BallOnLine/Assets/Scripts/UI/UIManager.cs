@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI txtFreezeAmount;
     public TextMeshProUGUI txtShieldAmount;
 
+    public GameObject pnlBottomUIBlocker;
+
     [Header("Before Level Start")]
     public GameObject btnStartLevel;
 
@@ -52,6 +54,10 @@ public class UIManager : MonoBehaviour
             {
                 inkAmountBar.gameObject.SetActive(false);
             }
+        }
+        if(pnlBottomUIBlocker != null)
+        {
+            pnlBottomUIBlocker.SetActive(true);
         }
     }
 
