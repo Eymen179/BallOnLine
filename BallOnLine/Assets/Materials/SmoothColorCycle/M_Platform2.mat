@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Platform
+  m_Name: M_Platform2
   m_Shader: {fileID: -6465566751694194690, guid: 1b08d8ca8d39aa446abbc302c6ad3ba2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ColorPalette:
-        m_Texture: {fileID: 2800000, guid: 16a9adb6b418db94f8579535d9628d67, type: 3}
+        m_Texture: {fileID: 2800000, guid: bfb08ed09d5513d428aedafd641c183a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
