@@ -42,7 +42,7 @@ public class MainMenuManager : MonoBehaviour
 
         // Ýlgili sahneyi yükle
         //SceneController.Instance.LoadScene("Level" + unlockedLevel);
-        SceneController.Instance.LoadScene("TestScene " + unlockedLevel);
+        SceneController.Instance.LoadScene("Level_" + unlockedLevel);
     }
     public void Button_Levels()
     {

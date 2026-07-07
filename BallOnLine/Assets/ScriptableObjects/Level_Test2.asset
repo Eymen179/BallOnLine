@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_Test2
   m_EditorClassIdentifier: 
   levelName: Level2
-  levelIndex: 2
+  levelIndex: -2
   axis: 1
   isInkLimited: 1
   maxInkAmount: 100

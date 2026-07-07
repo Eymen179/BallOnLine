@@ -24,10 +24,10 @@ public class InGameMenuManager : MonoBehaviour
         int nextLevelNum = LevelManager.Instance.currentLevel.levelIndex + 1;
 
         // Þimdilik 25 level planladýðýn için sýnýr koyuyoruz
-        if (nextLevelNum <= 25)
+        if (nextLevelNum <= 25 && nextLevelNum > 0)
         {
             //SceneController.Instance.LoadScene("Level" + nextLevelNum);
-            SceneController.Instance.LoadScene("TestScene " + nextLevelNum);
+            SceneController.Instance.LoadScene("Level_" + nextLevelNum);
 
         }
         else

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3daaf321716bac740a661736fda8c723, type: 3}
-  m_Name: Level_Test
+  m_Name: Level_3
   m_EditorClassIdentifier: 
-  levelName: Level1
-  levelIndex: -1
+  levelName: Level_3
+  levelIndex: 3
   axis: 1
-  isInkLimited: 1
+  isInkLimited: 0
   maxInkAmount: 100
   inkBallAmount: 10
-  FreezeStartCount: 3
-  ShieldStartCount: 3
-  FreezeRefillCount: 7
-  ShieldRefillCount: 4
+  FreezeStartCount: 1
+  ShieldStartCount: 0
+  FreezeRefillCount: 1
+  ShieldRefillCount: 1
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.5
   shootingSpeed: 1

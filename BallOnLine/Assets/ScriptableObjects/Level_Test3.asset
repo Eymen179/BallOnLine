@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_Test3
   m_EditorClassIdentifier: 
   levelName: Level3
-  levelIndex: 3
+  levelIndex: -3
   axis: 1
   isInkLimited: 1
   maxInkAmount: 100

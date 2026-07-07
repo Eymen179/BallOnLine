@@ -35,7 +35,7 @@ public class LevelMenuManager : MonoBehaviour
     {
         // "Level1", "Level2" isim standartlarýna göre sahneyi yükler
         //SceneController.Instance.LoadScene("Level" + levelIndex);
-        SceneController.Instance.LoadScene("TestScene " + levelIndex);
+        SceneController.Instance.LoadScene("Level_" + levelIndex);
     }
 
     public void Button_BackToMain()
