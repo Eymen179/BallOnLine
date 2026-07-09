@@ -10,6 +10,7 @@ TagManager:
   - Shrinker
   - Portal
   - Trampoline
+  - Coin
   layers:
   - Default
   - TransparentFX
