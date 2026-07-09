@@ -1,4 +1,6 @@
+using System;
 using TMPro;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +26,19 @@ public class UIManager : MonoBehaviour
 
     [Header("Before Level Start")]
     public GameObject btnStartLevel;
+
+    [Header("Level Finish")]
+    public Image star1;
+    public Image star2;
+    public Image star3;
+    public GameObject pnlTimeTable;
+    public Button btnTimeTable;
+
+    public TextMeshProUGUI txtResultTime;
+    [Header("Time Table Texts")]
+    public TextMeshProUGUI txtTarget3Stars;
+    public TextMeshProUGUI txtTarget2Stars;
+    public TextMeshProUGUI txtTarget1Star;
 
 
     private void Awake()
@@ -59,11 +74,56 @@ public class UIManager : MonoBehaviour
         {
             pnlBottomUIBlocker.SetActive(true);
         }
+
+        star1.gameObject.SetActive(false);
+        star2.gameObject.SetActive(false);
+        star3.gameObject.SetActive(false);
+
+        // Level baþladýðýnda TimeTable'daki hedef süre yazýlarýný otomatik doldur
+        if (LevelManager.Instance.currentLevel != null)
+        {
+            var level = LevelManager.Instance.currentLevel;
+
+            if (txtTarget3Stars != null)
+                txtTarget3Stars.text = TimeSpan.FromSeconds(level.timeForThreeStars).ToString(@"mm\:ss\:ff");
+
+            if (txtTarget2Stars != null)
+                txtTarget2Stars.text = TimeSpan.FromSeconds(level.timeForTwoStars).ToString(@"mm\:ss\:ff");
+
+            if (txtTarget1Star != null)
+                txtTarget1Star.text = TimeSpan.FromSeconds(level.timeForOneStar).ToString(@"mm\:ss\:ff");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Portal scriptinden çaðýracaðýmýz Yýldýz Hesaplama Metodu
+    public void CalculateAndShowStars(float finalTime)
     {
-        
+        var level = LevelManager.Instance.currentLevel;
+
+        // Önce her ihtimale karþý tüm dolu yýldýzlarý kapatalým (Zaten baþtan kapalý ama garanti olsun)
+        star1.gameObject.SetActive(false);
+        star2.gameObject.SetActive(false);
+        star3.gameObject.SetActive(false);
+
+        // Þartlarý kontrol edip uygun yýldýzlarý aktif ediyoruz
+        if (finalTime <= level.timeForThreeStars)
+        {
+            // 3 Yýldýz
+            star1.gameObject.SetActive(true);
+            star2.gameObject.SetActive(true);
+            star3.gameObject.SetActive(true);
+        }
+        else if (finalTime <= level.timeForTwoStars)
+        {
+            // 2 Yýldýz (Soldan ve ortadan 2 tanesi)
+            star1.gameObject.SetActive(true);
+            star2.gameObject.SetActive(true);
+        }
+        else if (finalTime <= level.timeForOneStar)
+        {
+            // 1 Yýldýz (Sadece en soldaki)
+            star1.gameObject.SetActive(true);
+        }
+        // Eðer süre timeForOneStar'dan da büyükse hiçbiri SetActive(true) olmaz, 0 yýldýz alýr.
     }
 }

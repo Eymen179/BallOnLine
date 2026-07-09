@@ -7,6 +7,7 @@ public class InGameMenuManager : MonoBehaviour
     public DrawingManager drawingManager;
     public Rigidbody2D ballRb;
 
+    private int button_TimeTableCounter = 0;
     private void Start()
     {
         
@@ -56,6 +57,11 @@ public class InGameMenuManager : MonoBehaviour
         {
             ballRb.simulated = false;
         }
+        // --- EKLENEN KISIM: TÝMER'I DURAKLAT ---
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.StopTimer();
+        }
     }
     /*Pause Menu*/
     public void Button_Continue()
@@ -69,6 +75,23 @@ public class InGameMenuManager : MonoBehaviour
         if (ballRb != null)
         {
             ballRb.simulated = true;
+        }
+        // --- EKLENEN KISIM: TÝMER'I DEVAM ETTÝR ---
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.StartTimer();
+        }
+    }
+    public void Button_TimeTable()
+    {
+        button_TimeTableCounter++;
+        if(button_TimeTableCounter % 2 == 1)
+        {
+            UIManager.Instance.pnlTimeTable.SetActive(true);
+        }
+        else
+        {
+            UIManager.Instance.pnlTimeTable.SetActive(false);
         }
     }
 }

@@ -6,7 +6,19 @@ public class Portal : MonoBehaviour, IInteractable
     {
         Destroy(ball.gameObject);
 
+        // --- EKLENEN KISIM: TÝMER'I DURDUR ---
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.StopTimer();
+        }
+
         UIManager.Instance.pnlWinMenu.SetActive(true);
+        UIManager.Instance.txtResultTime.text = UIManager.Instance.txtTimer.text;
+
+        // --- EKLENEN KISIM: YILDIZLARI HESAPLA ---
+        float finalTime = TimerManager.Instance.GetElapsedTime();
+        UIManager.Instance.CalculateAndShowStars(finalTime);
+        // -----------------------------------------
 
         // KAYIT SÝSTEMÝ: Þu anki levelin numarasýný al
         int currentLevelNum = LevelManager.Instance.currentLevel.levelIndex;

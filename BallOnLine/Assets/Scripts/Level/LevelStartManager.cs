@@ -163,5 +163,15 @@ public class LevelStartManager : MonoBehaviour
 
         if (ballRb != null) ballRb.simulated = true;
         if (drawingManager != null) drawingManager.isGameActive = true;
+
+        // --- EKLENEN KISIM: TÝMER'I BAÞLAT ---
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.StartTimer();
+        }
+
+        //Zaman Tablosu
+        UIManager.Instance.pnlTimeTable.SetActive(false);
+        UIManager.Instance.btnTimeTable.gameObject.SetActive(false);
     }
 }

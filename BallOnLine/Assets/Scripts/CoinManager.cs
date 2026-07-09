@@ -11,6 +11,7 @@ public class CoinManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -21,10 +22,11 @@ public class CoinManager : MonoBehaviour
     {
         coinAmount = PlayerPrefs.GetInt("CoinAmount", 0);
 
-        if(SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "LevelMenu")
+        if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "LevelMenu")
         {
             UIManager.Instance.txtCoinAmount.text = coinAmount.ToString();
         }
+
     }
     public void UpdateCoinAmount(int amount)
     {

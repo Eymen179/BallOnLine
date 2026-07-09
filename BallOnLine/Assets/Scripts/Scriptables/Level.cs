@@ -22,6 +22,16 @@ public class Level : ScriptableObject
 
     public float shootingSpeed = 1.0f;
 
+    [Header("Star Target Times (Seconds)")]
+    [Tooltip("3 Yýldýz almak için bitirilmesi gereken maksimum süre (Saniye)")]
+    public float timeForThreeStars = 10f;
+
+    [Tooltip("2 Yýldýz almak için bitirilmesi gereken maksimum süre (Saniye)")]
+    public float timeForTwoStars = 20f;
+
+    [Tooltip("1 Yýldýz almak için bitirilmesi gereken maksimum süre (Saniye)")]
+    public float timeForOneStar = 30f;
+
     public enum levelAxis
     {
         XAxis,
