@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2693314044878831540}
   - component: {fileID: 998134168770834302}
   - component: {fileID: 6202658585744191351}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ImgTopBand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 7616247318541951093}
   - component: {fileID: 8805422558668280756}
   - component: {fileID: 85509594042513309}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI_BlackBands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 2557343889007715640}
   - component: {fileID: 3075630190234909474}
   - component: {fileID: 1931044793519861382}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ImgBottomBand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

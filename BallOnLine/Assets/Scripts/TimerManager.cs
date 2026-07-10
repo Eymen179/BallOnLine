@@ -71,7 +71,7 @@ public class TimerManager : MonoBehaviour
             // mm: Dakika (2 hane)
             // ss: Saniye (2 hane)
             // ff: Salise / Yüzdelik saniye (2 hane)
-            UIManager.Instance.txtTimer.text = time.ToString(@"mm\:ss\:ff");
+            UIManager.Instance.txtTimer.text = time.ToString(@"mm\:ss\.ff");
         }
     }
 }

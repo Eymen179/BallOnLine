@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class LevelMenuManager : MonoBehaviour
         for (int i = 0; i < levelButtons.Length; i++)
         {
             int levelNum = i + 1; // Diziler 0'dan, leveller 1'den baþlar
+
+            levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = levelNum.ToString();
 
             if (levelNum <= unlockedLevel)
             {
