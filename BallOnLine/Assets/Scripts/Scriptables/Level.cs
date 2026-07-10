@@ -21,6 +21,7 @@ public class Level : ScriptableObject
     public float shrinkMultiplier = 0.5f;
 
     public float shootingSpeed = 1.0f;
+    public float fireInterval = 1.5f;
 
     [Header("Star Target Times (Seconds)")]
     [Tooltip("3 Yýldýz almak için bitirilmesi gereken maksimum süre (Saniye)")]
