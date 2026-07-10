@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour, IInteractable
             TimerManager.Instance.StopTimer();
         }
 
-        UIManager.Instance.pnlWinMenu.SetActive(true);
+        UIManager.Instance.OpenPanel(UIManager.Instance.pnlWinMenu);
         UIManager.Instance.txtResultTime.text = UIManager.Instance.txtTimer.text;
 
         // --- EKLENEN KISIM: YILDIZLARI HESAPLA ---

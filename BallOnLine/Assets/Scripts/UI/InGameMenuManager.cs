@@ -46,7 +46,7 @@ public class InGameMenuManager : MonoBehaviour
     /*In-Game UI*/
     public void Button_Pause()
     {
-        UIManager.Instance.pnlPauseMenu.SetActive(true);
+        UIManager.Instance.OpenPanel(UIManager.Instance.pnlPauseMenu);
 
         if (drawingManager != null)
         {
@@ -66,7 +66,8 @@ public class InGameMenuManager : MonoBehaviour
     /*Pause Menu*/
     public void Button_Continue()
     {
-        UIManager.Instance.pnlPauseMenu.SetActive(false);
+        UIManager.Instance.ClosePanel(UIManager.Instance.pnlPauseMenu);
+
         if (drawingManager != null)
         {
             drawingManager.isGameActive = true;

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using TMPro;
 using TMPro.EditorUtilities;
@@ -125,5 +126,26 @@ public class UIManager : MonoBehaviour
             star1.gameObject.SetActive(true);
         }
         // Eðer süre timeForOneStar'dan da büyükse hiçbiri SetActive(true) olmaz, 0 yýldýz alýr.
+    }
+
+    // Paneli yaylanarak (OutBack) açar
+    public void OpenPanel(GameObject panel)
+    {
+        panel.SetActive(true);
+        panel.transform.localScale = Vector3.zero; // Önce 0 boyutuna al
+
+        // 0.4 saniyede yaylanarak 1 (orijinal) boyutuna getir
+        // SetUpdate(true) komutu, oyun dondurulsa bile (TimeScale = 0) animasyonun oynamasýný saðlar
+        panel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
+    }
+
+    // Paneli içine çökerek (InBack) kapatýr
+    public void ClosePanel(GameObject panel)
+    {
+        // Önce 0.3 saniyede 0 boyutuna küçült, iþlem bitince (OnComplete) objeyi tamamen kapat
+        panel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() =>
+        {
+            panel.SetActive(false);
+        });
     }
 }

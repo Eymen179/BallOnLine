@@ -12,8 +12,8 @@ public class MainMenuManager : MonoBehaviour
     public Sprite spriteVibrationOn;
     public Sprite spriteVibrationOff;
 
-    public Button buttonSoundSettings;
-    public Button buttonVibrationSettings;
+    public Image buttonSoundSettings;
+    public Image buttonVibrationSettings;
 
     private int soundButtonCounter = 0;
     private int vibrationButtonCounter = 0;

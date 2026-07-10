@@ -13,7 +13,7 @@ public class BallController : MonoBehaviour
         Debug.Log("Top Patladý!");
         gameObject.SetActive(false);
 
-        UIManager.Instance.pnlDeathMenu.SetActive(true);
+        UIManager.Instance.OpenPanel(UIManager.Instance.pnlDeathMenu);
     }
 
     // ÇARPIÞMA KONTROLÜ (Sadece 4 satýr!)

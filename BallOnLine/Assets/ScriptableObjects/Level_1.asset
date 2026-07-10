@@ -15,7 +15,7 @@ MonoBehaviour:
   levelName: Level_1
   levelIndex: 1
   axis: 1
-  isInkLimited: 0
+  isInkLimited: 1
   maxInkAmount: 100
   inkBallAmount: 10
   FreezeStartCount: 0
@@ -25,6 +25,7 @@ MonoBehaviour:
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.5
   shootingSpeed: 5
+  fireInterval: 1.5
   timeForThreeStars: 5
   timeForTwoStars: 8
   timeForOneStar: 15
