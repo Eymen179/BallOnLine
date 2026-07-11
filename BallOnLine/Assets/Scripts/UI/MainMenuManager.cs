@@ -58,6 +58,10 @@ public class MainMenuManager : MonoBehaviour
         vibrationButtonCounter++;
         ButtonCounter(vibrationButtonCounter, spriteVibrationOn, spriteVibrationOff, false);
     }
+    public void Button_Shop()
+    {
+        SceneController.Instance.LoadScene("ShopMenu");
+    }
     public void Button_PrivacyPolicy()
     {
 
