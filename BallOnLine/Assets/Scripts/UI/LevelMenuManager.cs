@@ -23,6 +23,8 @@ public class LevelMenuManager : MonoBehaviour
                 // Level açýksa butonu aktif et ve dinleyici ekle
                 levelButtons[i].interactable = true;
 
+                levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().alpha = 1f; // Buton yazýsýný görünür yap
+
                 // Butona týklandýðýnda LoadLevel metodunu o levelin numarasýyla çalýþtýr
                 levelButtons[i].onClick.AddListener(() => LoadLevel(levelNum));
             }
@@ -30,6 +32,8 @@ public class LevelMenuManager : MonoBehaviour
             {
                 // Level kilitliyse butonu soluk ve týklanamaz yap
                 levelButtons[i].interactable = false;
+
+                levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().alpha = 0.3f; // Buton yazýsýný görünür yap
             }
         }
     }
