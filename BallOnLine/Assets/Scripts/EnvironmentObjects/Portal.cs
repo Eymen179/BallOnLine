@@ -6,7 +6,6 @@ public class Portal : MonoBehaviour, IInteractable
     {
         Destroy(ball.gameObject);
 
-        // --- EKLENEN KISIM: TÝMER'I DURDUR ---
         if (TimerManager.Instance != null)
         {
             TimerManager.Instance.StopTimer();
@@ -15,25 +14,32 @@ public class Portal : MonoBehaviour, IInteractable
         UIManager.Instance.OpenPanel(UIManager.Instance.pnlWinMenu);
         UIManager.Instance.txtResultTime.text = UIManager.Instance.txtTimer.text;
 
-        // --- EKLENEN KISIM: YILDIZLARI HESAPLA ---
+        // --- GÜNCELLENEN KISIM ---
         float finalTime = TimerManager.Instance.GetElapsedTime();
-        UIManager.Instance.CalculateAndShowStars(finalTime);
-        // -----------------------------------------
+
+        // Þu anki level numarasýný ve eski rekoru al
+        int currentLevelNum = LevelManager.Instance.currentLevel.levelIndex;
+        int previousStars = PlayerPrefs.GetInt("LevelStars_" + currentLevelNum, 0);
+
+        // UI'da yýldýzlarý göster (Eski rekoru da metoda gönderiyoruz ki hangilerini uçuracaðýný bilsin)
+        int earnedStars = UIManager.Instance.CalculateAndShowStars(finalTime, previousStars);
+
+        // Kazanýlan yýldýzlarý StarManager'a yolla
+        if (StarManager.Instance != null)
+        {
+            StarManager.Instance.SaveLevelStars(currentLevelNum, earnedStars);
+        }
+        // -------------------------
 
         UIManager.Instance.txtTimer.gameObject.SetActive(false);
         UIManager.Instance.starCounter.SetActive(true);
 
-        // KAYIT SÝSTEMÝ: Þu anki levelin numarasýný al
-        int currentLevelNum = LevelManager.Instance.currentLevel.levelIndex;
-        // Sistemde kayýtlý olan "Açýk Level" numarasýný al (Yoksa varsayýlan 1'dir)
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
 
-        // Eðer oyuncu, kilidini açtýðý en son leveli bitirdiyse, bir sonrakini aç
         if (currentLevelNum >= unlockedLevel)
         {
             PlayerPrefs.SetInt("UnlockedLevel", currentLevelNum + 1);
-            PlayerPrefs.Save(); // Telefona kaydet
+            PlayerPrefs.Save();
         }
     }
-
 }
