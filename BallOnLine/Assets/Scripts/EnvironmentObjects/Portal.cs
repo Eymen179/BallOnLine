@@ -20,6 +20,9 @@ public class Portal : MonoBehaviour, IInteractable
         UIManager.Instance.CalculateAndShowStars(finalTime);
         // -----------------------------------------
 
+        UIManager.Instance.txtTimer.gameObject.SetActive(false);
+        UIManager.Instance.starCounter.SetActive(true);
+
         // KAYIT SÝSTEMÝ: Þu anki levelin numarasýný al
         int currentLevelNum = LevelManager.Instance.currentLevel.levelIndex;
         // Sistemde kayýtlý olan "Açýk Level" numarasýný al (Yoksa varsayýlan 1'dir)

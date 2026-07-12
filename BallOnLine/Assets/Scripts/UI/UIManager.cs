@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     [Header("In Game UI - Top")]
     public TextMeshProUGUI txtTimer;
     public TextMeshProUGUI txtCoinAmount;
+    public TextMeshProUGUI txtStarAmount;
+    public GameObject starCounter;
+
     public Slider inkAmountBar;
 
     [Header("In Game UI - Bottom")]
@@ -79,6 +82,9 @@ public class UIManager : MonoBehaviour
         star1.gameObject.SetActive(false);
         star2.gameObject.SetActive(false);
         star3.gameObject.SetActive(false);
+
+        starCounter.SetActive(false);
+        txtTimer.gameObject.SetActive(true);
 
         // Level baþladýðýnda TimeTable'daki hedef süre yazýlarýný otomatik doldur
         if (LevelManager.Instance.currentLevel != null)
