@@ -1,4 +1,3 @@
-using DTT.UI.ProceduralUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,130 +5,90 @@ using UnityEngine.UI;
 public class ShopItemUI : MonoBehaviour
 {
     [Header("Data")]
-    public ShopItemSO itemData; // Bu panele ait topun verisi
+    public ShopItemSO itemData;
 
-    [Header("UI Elements")]
-    public Image imgShopItem;
+    [Header("Shared Icons (Ortak Görseller)")]
+    public Image imgBall;
     public Image imgLocked;
-    public Button btnBuyAndUse;
 
-    [Header("Button Contents (Texts & Icons)")]
-    public TextMeshProUGUI txtAction; // "Use" veya "Using" yazacak text
-    public GameObject starIconGroup; // Ýçinde yýldýz ikonu ve text'i olan obje
-    public GameObject coinIconGroup; // Ýçinde coin ikonu ve text'i olan obje
-    public TextMeshProUGUI txtCoinCost;
-    public TextMeshProUGUI txtStarRequirement;
+    [Header("5 State Buttons (Hiyerarþideki Butonlar)")]
+    public GameObject btnUsing;        // Açýk Mavi (Kullanýmda)
+    public GameObject btnUse;          // Koyu Mavi (Kullanýmda deðil)
+    public GameObject btnLocked;       // Gri (Star isteyen)
+    public GameObject btnCanBuy;       // Yeþil (Coin yeterli)
+    public GameObject btnCanNotBuy;    // Kýrmýzý (Coin yetersiz)
 
-    private GradientEffect buttonGradient;
-    /*public Gradient grayGradient; // Gri Gradient
-    public Gradient redGradient; // Kýrmýzý Gradient
-    public Gradient greenGradient; // Yeþil Gradient
-    public Gradient lightBlueGradient; // Açýk Mavi Gradient
-    public Gradient darkBlueGradient; // Koyu Mavi Gradient*/
+    [Header("Texts (Fiyat ve Yýldýz Yazýlarý)")]
+    public TextMeshProUGUI txtStarRequirement; // BtnLocked'ýn içindeki Text
+    public TextMeshProUGUI txtCostCanBuy;      // BtnCanBuy'ýn içindeki Text
+    public TextMeshProUGUI txtCostCannotBuy;   // BtnCanNotBuy'ýn içindeki Text
 
     private void Awake()
     {
-        buttonGradient = btnBuyAndUse.GetComponent<GradientEffect>();
-        // Butona týklandýðýnda Manager'a haber ver
-        btnBuyAndUse.onClick.AddListener(OnButtonClicked);
+        // Sadece etkileþime girilebilen (Yeþil ve Koyu Mavi) butonlara týklanma özelliði ekliyoruz.
+        // Böylece Inspector'dan tek tek OnClick atamakla uðraþmayacaksýn.
+        if (btnCanBuy != null)
+        {
+            Button btnGreen = btnCanBuy.GetComponent<Button>();
+            if (btnGreen != null) btnGreen.onClick.AddListener(OnButtonClicked);
+        }
+
+        if (btnUse != null)
+        {
+            Button btnDarkBlue = btnUse.GetComponent<Button>();
+            if (btnDarkBlue != null) btnDarkBlue.onClick.AddListener(OnButtonClicked);
+        }
     }
 
     public void Setup(ShopItemState state)
     {
-        // 1. Temel Görselleri Ayarla
-        imgShopItem.sprite = itemData.shopImage;
+        // 1. Ortak Verileri Doldur
+        if (imgBall != null) imgBall.sprite = itemData.shopImage;
+        if (txtStarRequirement != null) txtStarRequirement.text = itemData.requiredStars.ToString();
+        if (txtCostCanBuy != null) txtCostCanBuy.text = itemData.coinCost.ToString();
+        if (txtCostCannotBuy != null) txtCostCannotBuy.text = itemData.coinCost.ToString();
 
-        starIconGroup.SetActive(false);
-        coinIconGroup.SetActive(false);
-        txtAction.gameObject.SetActive(false);
+        // 2. Önce Tüm Butonlarý Gizle (Temizlik)
+        if (btnLocked != null) btnLocked.SetActive(false);
+        if (btnCanNotBuy != null) btnCanNotBuy.SetActive(false);
+        if (btnCanBuy != null) btnCanBuy.SetActive(false);
+        if (btnUsing != null) btnUsing.SetActive(false);
+        if (btnUse != null) btnUse.SetActive(false);
 
-        // 2. Duruma (State) Göre 5 Farklý Tasarým
+        // 3. Duruma (State) Göre Sadece Ýlgili Ýkonu ve Butonu Aç
         switch (state)
         {
             case ShopItemState.Locked_Gray:
-                imgShopItem.gameObject.SetActive(false);
+                imgBall.gameObject.SetActive(false);
                 imgLocked.gameObject.SetActive(true);
-                btnBuyAndUse.interactable = false;
-                SetDynamicGradient(new Color(0.6f, 0.6f, 0.6f), new Color(0.3f, 0.3f, 0.3f)); // Gri
-                //SetButtonColor(grayGradient); // Gri Gradient
-                starIconGroup.SetActive(true);
-                txtStarRequirement.text = itemData.requiredStars.ToString();
+                if (btnLocked != null) btnLocked.SetActive(true);
                 break;
 
             case ShopItemState.CannotBuy_Red:
-                imgShopItem.gameObject.SetActive(true);
+                imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
-                btnBuyAndUse.interactable = false;
-                SetDynamicGradient(new Color(1f, 0.2f, 0.3f), new Color(0.6f, 0f, 0.1f)); // Kýrmýzý
-                //SetButtonColor(redGradient); // Kýrmýzý Gradient
-                coinIconGroup.SetActive(true);
-                txtCoinCost.text = itemData.coinCost.ToString();
+                if (btnCanNotBuy != null) btnCanNotBuy.SetActive(true);
                 break;
 
             case ShopItemState.CanBuy_Green:
-                imgShopItem.gameObject.SetActive(true);
+                imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
-                btnBuyAndUse.interactable = true;
-                SetDynamicGradient(new Color(0.2f, 0.9f, 0.2f), new Color(0f, 0.5f, 0f)); // Yeþil
-                //SetButtonColor(greenGradient); // Yeþil Gradient
-                coinIconGroup.SetActive(true);
-                txtCoinCost.text = itemData.coinCost.ToString();
+                if (btnCanBuy != null) btnCanBuy.SetActive(true);
                 break;
 
             case ShopItemState.Equipped_LightBlue:
-                imgShopItem.gameObject.SetActive(true);
+                imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
-                btnBuyAndUse.interactable = false; // Kullanýlan topa tekrar týklanamaz
-                SetDynamicGradient(new Color(0.2f, 0.8f, 1f), new Color(0f, 0.4f, 0.8f)); // Açýk Mavi
-                //SetButtonColor(lightBlueGradient); // Açýk Mavi Gradient
-                txtAction.gameObject.SetActive(true);
-                txtAction.text = "Using";
+                if (btnUsing != null) btnUsing.SetActive(true);
                 break;
 
             case ShopItemState.Owned_DarkBlue:
-                imgShopItem.gameObject.SetActive(true);
+                imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
-                btnBuyAndUse.interactable = true; // DÜZELTME: Seçebilmek için aktif olmalý
-                SetDynamicGradient(new Color(0.1f, 0.2f, 0.8f), new Color(0f, 0f, 0.4f)); // Koyu Mavi
-                //SetButtonColor(darkBlueGradient); // Koyu Mavi Gradient
-                txtAction.gameObject.SetActive(true);
-                txtAction.text = "Use";
+                if (btnUse != null) btnUse.SetActive(true);
                 break;
         }
     }
-
-    // YENÝ EKLENEN DÝNAMÝK GRADÝENT METODU
-    private void SetDynamicGradient(Color topColor, Color bottomColor)
-    {
-        if (buttonGradient != null)
-        {
-            Gradient g = new Gradient();
-            GradientColorKey[] colorKeys = new GradientColorKey[2];
-            colorKeys[0].color = topColor; colorKeys[0].time = 0f;
-            colorKeys[1].color = bottomColor; colorKeys[1].time = 1f;
-
-            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-            alphaKeys[0].alpha = 1f; alphaKeys[0].time = 0f;
-            alphaKeys[1].alpha = 1f; alphaKeys[1].time = 1f;
-
-            g.SetKeys(colorKeys, alphaKeys);
-            buttonGradient.Gradient = g;
-
-            // Efekti kapa aç yaparak anýnda ekrana yansýmasýný zorlar
-            buttonGradient.enabled = false;
-            buttonGradient.enabled = true;
-        }
-    }
-    /*private void SetButtonColor(Gradient gradient)
-    {
-        // NOT: DTT Procedural UI kullanýyorsan, bu kýsmý o asset'in Gradient deðiþtirme koduyla güncellemelisin.
-        if (buttonGradient != null)
-        {
-            buttonGradient.Gradient = gradient;
-            buttonGradient.enabled = false; // Efekti kapa aç yaparak yenilemeye zorla
-            buttonGradient.enabled = true;
-        }
-    }*/
 
     private void OnButtonClicked()
     {
@@ -137,6 +96,7 @@ public class ShopItemUI : MonoBehaviour
     }
 }
 
+// (ShopItemState enum'u zaten ayný kalsýn)
 public enum ShopItemState
 {
     Locked_Gray,

@@ -20,6 +20,8 @@ public class ShopMenuManager : MonoBehaviour
     public Button button_trailShop;
     public Button button_lineShop;
 
+    public TextMeshProUGUI txtComingSoon;
+
     private void Awake()
     {
         if (Instance == null)
@@ -67,6 +69,8 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_ballShop, 1f);
         ButtonSettings(button_lineShop, 0.5f);
         ButtonSettings(button_trailShop, 0.5f);
+
+        txtComingSoon.gameObject.SetActive(false);
     }
     public void Button_TrailShop()
     {
@@ -77,6 +81,8 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_ballShop, 0.5f);
         ButtonSettings(button_lineShop, 0.5f);
         ButtonSettings(button_trailShop, 1f);
+
+        txtComingSoon.gameObject.SetActive(true);
     }
     public void Button_LineShop()
     {
@@ -87,6 +93,8 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_ballShop, 0.5f);
         ButtonSettings(button_lineShop, 1f);
         ButtonSettings(button_trailShop, 0.5f);
+
+        txtComingSoon.gameObject.SetActive(true);
     }
     public void Button_BackToMainMenu()
     {
