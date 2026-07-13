@@ -2,6 +2,29 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    // --- YENÝ EKLENEN KISIM: Oyun baþladýðýnda seçili skini kuþanma ---
+    private void Start()
+    {
+        // SkinManager sahnede var mý kontrol et
+        if (SkinManager.Instance != null)
+        {
+            // Kayýtlý olan skini getir
+            ShopItemSO equippedSkin = SkinManager.Instance.GetEquippedBallSkin();
+
+            if (equippedSkin != null)
+            {
+                // Topun kendi üzerindeki Renderer'ý bul ve materyalini/rengini deðiþtir
+                Renderer renderer = GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    renderer.material = equippedSkin.shopItemMaterial;
+                    renderer.material.color = equippedSkin.shopItemColor;
+                }
+            }
+        }
+    }
+    // ------------------------------------------------------------------
+
     public void ChangeSize(float multiplier)
     {
         transform.localScale *= multiplier;

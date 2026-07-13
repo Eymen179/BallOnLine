@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa37944769c22c489239af9aa07189a, type: 3}
+  m_Name: BallSkin4
+  m_EditorClassIdentifier: 
+  itemID: Ball4
+  shopImage: {fileID: -2413806693520163455, guid: e39a59290bac8924db37d486e3ef2d52, type: 3}
+  shopItemMaterial: {fileID: 2100000, guid: ee3a96941a55d344096f2674d5bdd052, type: 2}
+  shopItemColor: {r: 1, g: 0, b: 0.22352941, a: 1}
+  requiredStars: 0
+  coinCost: 50

@@ -12,6 +12,8 @@ public class StarManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            // Oyuna girildiðinde toplam yýldýz miktarýný hafýzadan çek
+            totalStars = PlayerPrefs.GetInt("TotalStars", 0);
         }
         else
         {
@@ -21,8 +23,7 @@ public class StarManager : MonoBehaviour
 
     private void Start()
     {
-        // Oyuna girildiðinde toplam yýldýz miktarýný hafýzadan çek
-        totalStars = PlayerPrefs.GetInt("TotalStars", 0);
+
     }
 
     // Portal scriptinden çaðrýlacak metot

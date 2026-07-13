@@ -13,6 +13,8 @@ public class CoinManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            // Sadece veriyi çekiyoruz, UI atamasýný diðer scriptler kendi Start'ýnda yapacak
+            coinAmount = PlayerPrefs.GetInt("CoinAmount", 0);
         }
         else
         {
@@ -22,8 +24,7 @@ public class CoinManager : MonoBehaviour
 
     private void Start()
     {
-        // Sadece veriyi çekiyoruz, UI atamasýný diðer scriptler kendi Start'ýnda yapacak
-        coinAmount = PlayerPrefs.GetInt("CoinAmount", 0);
+
     }
 
     // "bool updateUI = true" eklendi. Varsayýlan olarak UI'ý günceller.
