@@ -14,11 +14,11 @@ public class BallController : MonoBehaviour
             if (equippedSkin != null)
             {
                 // Topun kendi üzerindeki Renderer'ý bul ve materyalini/rengini deðiþtir
-                Renderer renderer = GetComponent<Renderer>();
-                if (renderer != null)
+                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
                 {
-                    renderer.material = equippedSkin.shopItemMaterial;
-                    renderer.material.color = equippedSkin.shopItemColor;
+                    spriteRenderer.material = equippedSkin.shopItemMaterial;
+                    spriteRenderer.material.color = equippedSkin.shopItemColor;
                 }
             }
         }

@@ -36,9 +36,12 @@ public class BallSpawner : MonoBehaviour
             ShopItemSO equippedSkin = SkinManager.Instance.GetEquippedBallSkin();
             if (equippedSkin != null)
             {
-                Renderer renderer = newBall.GetComponent<Renderer>();
-                renderer.material = equippedSkin.shopItemMaterial;
-                renderer.material.color = equippedSkin.shopItemColor;
+                SpriteRenderer spriteRenderer = newBall.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.material = equippedSkin.shopItemMaterial;
+                    spriteRenderer.material.color = equippedSkin.shopItemColor;
+                }
             }
         }
     }
