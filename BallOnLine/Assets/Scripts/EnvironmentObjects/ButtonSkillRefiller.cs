@@ -5,7 +5,6 @@ public class ButtonSkillRefiller : MonoBehaviour, IInteractable
 {
     public SkillType skillType = SkillType.Freeze;
 
-    public TextMeshProUGUI txtRefillAmount;
     private int refillAmount = 1;
 
     private void Start()
@@ -20,9 +19,6 @@ public class ButtonSkillRefiller : MonoBehaviour, IInteractable
                 refillAmount = LevelManager.Instance.currentLevel.ShieldRefillCount;
                 break;
         }
-
-        // Yazý güncellemesini deðerler atandýktan SONRA yapmalýyýz
-        txtRefillAmount.text = "+" + refillAmount.ToString();
     }
 
     public void Interact(BallController ball)

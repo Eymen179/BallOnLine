@@ -50,6 +50,8 @@ public class BallController : MonoBehaviour
 
         AudioManager.Instance.PlayAudioClip("Sound_BallExplosion");
 
+        DrawingManager.Instance.isGameActive = false;
+
         // --- PATLAMA EFEKTÝ ---
         if (explosionPrefab != null)
         {
