@@ -92,6 +92,8 @@ public class ShopItemUI : MonoBehaviour
 
     private void OnButtonClicked()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         BallShopManager.Instance.OnShopItemClicked(this);
     }
 }

@@ -27,6 +27,7 @@ public class ButtonSkillRefiller : MonoBehaviour, IInteractable
 
     public void Interact(BallController ball)
     {
+        AudioManager.Instance.PlayAudioClip("Sound_RefillerPickup");
         switch (skillType)
         {
             case SkillType.Freeze:

@@ -174,18 +174,24 @@ public class UIManager : MonoBehaviour
             starSequence.AppendInterval(0.4f);
 
             if (earnedStars >= 1)
-                starSequence.Append(star1.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack));
+            {
+                // Büyüme animasyonu baþladýðý an (.OnStart) sesi çal
+                starSequence.Append(star1.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack)
+                    .OnStart(() => AudioManager.Instance.PlayAudioClip("Sound_StarAppear")));
+            }
 
             if (earnedStars >= 2)
             {
                 starSequence.AppendInterval(0.5f);
-                starSequence.Append(star2.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack));
+                starSequence.Append(star2.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack)
+                    .OnStart(() => AudioManager.Instance.PlayAudioClip("Sound_StarAppear")));
             }
 
             if (earnedStars >= 3)
             {
                 starSequence.AppendInterval(0.5f);
-                starSequence.Append(star3.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack));
+                starSequence.Append(star3.transform.DOScale(2f, 0.4f).SetEase(Ease.OutBack)
+                    .OnStart(() => AudioManager.Instance.PlayAudioClip("Sound_StarAppear")));
             }
 
             // Orijinal yýldýzlarýn açýlmasý bittiðinde uçma metodunu çaðýr (Eski rekoru da gönderiyoruz)
@@ -256,6 +262,8 @@ public class UIManager : MonoBehaviour
                 // --- COIN SAYAÇ GÜNCELLEMESÝ VE JUICE EFEKTÝ ---
                 if (int.TryParse(txtCoinAmount.text, out int currentVisualCount))
                 {
+                    AudioManager.Instance.PlayAudioClip("Sound_CoinIncreased");
+
                     currentVisualCount += coinValueToAdd;
                     txtCoinAmount.text = currentVisualCount.ToString();
 
@@ -287,6 +295,8 @@ public class UIManager : MonoBehaviour
                 // --- SAYAÇ GÜNCELLEMESÝ (Animasyon bitince çalýþýr) ---
                 if (int.TryParse(txtStarAmount.text, out int currentVisualCount))
                 {
+                    AudioManager.Instance.PlayAudioClip("Sound_StarIncreased");
+
                     currentVisualCount++; // Ekranda gördüðümüz sayýyý 1 artýr
                     txtStarAmount.text = currentVisualCount.ToString();
 

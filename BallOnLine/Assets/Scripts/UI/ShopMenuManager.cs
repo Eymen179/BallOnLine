@@ -62,6 +62,8 @@ public class ShopMenuManager : MonoBehaviour
     }
     public void Button_BallShop()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         ScrollViewsettings(ballShop_ScrollView, true);
         ScrollViewsettings(trailShop_ScrollView, false);
         ScrollViewsettings(lineShop_ScrollView, false);
@@ -74,6 +76,8 @@ public class ShopMenuManager : MonoBehaviour
     }
     public void Button_TrailShop()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         ScrollViewsettings(ballShop_ScrollView, false);
         ScrollViewsettings(trailShop_ScrollView, true);
         ScrollViewsettings(lineShop_ScrollView, false);
@@ -86,6 +90,8 @@ public class ShopMenuManager : MonoBehaviour
     }
     public void Button_LineShop()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         ScrollViewsettings(ballShop_ScrollView, false);
         ScrollViewsettings(trailShop_ScrollView, false);
         ScrollViewsettings(lineShop_ScrollView, true);
@@ -98,6 +104,8 @@ public class ShopMenuManager : MonoBehaviour
     }
     public void Button_BackToMainMenu()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         SceneController.Instance.LoadScene("MainMenu");
     }
 

@@ -85,6 +85,8 @@ public class Menu_DrawingManager : MonoBehaviour
 
     void CreateLine(Vector2 screenPos)
     {
+        //AudioManager.Instance.PlayAudioClip("Sound_Drawing");
+
         lineCount++;
         currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lines.Add(currentLine);

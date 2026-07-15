@@ -44,6 +44,7 @@ public class ButtonSkillManager : MonoBehaviour
 
     public void OnFreezePointerDown()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
         if (freezeCount > 0)
         {
             UpdateFreezeCount(-1);
@@ -59,6 +60,7 @@ public class ButtonSkillManager : MonoBehaviour
 
     public void ShieldButton()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
         if (shieldCount > 0 && !isShieldActive)
         {
             UpdateShieldCount(-1);

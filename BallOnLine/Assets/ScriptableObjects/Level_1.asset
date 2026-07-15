@@ -15,7 +15,7 @@ MonoBehaviour:
   levelName: Level_1
   levelIndex: 1
   axis: 1
-  isInkLimited: 1
+  isInkLimited: 0
   maxInkAmount: 100
   inkBallAmount: 10
   FreezeStartCount: 0

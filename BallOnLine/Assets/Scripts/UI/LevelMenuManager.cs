@@ -69,11 +69,15 @@ public class LevelMenuManager : MonoBehaviour
 
     private void LoadLevel(int levelIndex)
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         SceneController.Instance.LoadScene("Level_" + levelIndex);
     }
 
     public void Button_BackToMain()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         SceneController.Instance.LoadScene("MainMenu");
     }
 }

@@ -15,6 +15,8 @@ public class InGameMenuManager : MonoBehaviour
     /*Pause Menu - Win Menu - Death Menu*/
     public void Button_RestartLevel()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         // Mevcut sahneyi tekrar yükler
         SceneController.Instance.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -22,6 +24,8 @@ public class InGameMenuManager : MonoBehaviour
     /*Win Menu*/
     public void Button_NextLevel()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         int nextLevelNum = LevelManager.Instance.currentLevel.levelIndex + 1;
 
         // Þimdilik 25 level planladýðýn için sýnýr koyuyoruz
@@ -40,12 +44,16 @@ public class InGameMenuManager : MonoBehaviour
     /*Pause Menu - Win Menu - Death Menu*/
     public void Button_BackToMainMenu()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         // Ana menü sahnesinin adýnýn "MainMenu" olduðunu varsayýyorum
         SceneController.Instance.LoadScene("MainMenu");
     }
     /*In-Game UI*/
     public void Button_Pause()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         UIManager.Instance.OpenPanel(UIManager.Instance.pnlPauseMenu);
 
         if (drawingManager != null)
@@ -66,6 +74,8 @@ public class InGameMenuManager : MonoBehaviour
     /*Pause Menu*/
     public void Button_Continue()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         UIManager.Instance.ClosePanel(UIManager.Instance.pnlPauseMenu);
 
         if (drawingManager != null)
@@ -85,6 +95,8 @@ public class InGameMenuManager : MonoBehaviour
     }
     public void Button_TimeTable()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
+
         button_TimeTableCounter++;
         if(button_TimeTableCounter % 2 == 1)
         {

@@ -147,6 +147,8 @@ public class LevelStartManager : MonoBehaviour
 
     public void StartLevelPlay()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         isPanningMode = false;
 
         vcamPan.SetActive(false);

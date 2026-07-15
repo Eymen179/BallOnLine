@@ -58,6 +58,7 @@ public class Turret : MonoBehaviour
         // --- MERMÝ ÜRETÝMÝ VE HAREKETÝ ---
         if (projectilePrefab != null && firePoint != null)
         {
+            AudioManager.Instance.PlayAudioClip("Sound_TurretFire"); // Ateþ sesi çal
             // Mermiyi namlu ucunda (firePoint) üret
             GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 

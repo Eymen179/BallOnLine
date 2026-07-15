@@ -6,6 +6,8 @@ public class Portal : MonoBehaviour, IInteractable
     {
         Destroy(ball.gameObject);
 
+        DrawingManager.Instance.isGameActive = false;
+
         if (TimerManager.Instance != null)
         {
             TimerManager.Instance.StopTimer();

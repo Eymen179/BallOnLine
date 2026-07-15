@@ -23,6 +23,7 @@ public class Trampoline : MonoBehaviour
 
         if (ball != null)
         {
+            AudioManager.Instance.PlayAudioClip("Sound_Trampoline");
             // Olasý pozisyon kaymalarýný önlemek için, eðer halihazýrda çalan bir 
             // trambolin animasyonu varsa onu anýnda bitirip orijinal konumuna döndürürüz.
             transform.DOComplete();

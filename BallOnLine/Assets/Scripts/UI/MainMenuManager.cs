@@ -19,13 +19,16 @@ public class MainMenuManager : MonoBehaviour
     private int vibrationButtonCounter = 0;
     void Start()
     {
-        if(buttonSoundSettings != null)
+        soundButtonCounter = PlayerPrefs.GetInt("SoundButtonCounter", 0);
+        vibrationButtonCounter = PlayerPrefs.GetInt("VibrationButtonCounter", 0);
+
+        if (buttonSoundSettings != null)
         {
-            ButtonCounter(0, spriteSoundOn, spriteSoundOff, true);
+            ButtonCounter(soundButtonCounter, spriteSoundOn, spriteSoundOff, true);
         }
         if(buttonVibrationSettings != null)
         {
-            ButtonCounter(0, spriteVibrationOn, spriteVibrationOff, false);
+            ButtonCounter(vibrationButtonCounter, spriteVibrationOn, spriteVibrationOff, false);
         }
     }
 
@@ -37,6 +40,8 @@ public class MainMenuManager : MonoBehaviour
     //-------------------------------------------------------------------------------
     public void Button_Start()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         // Kaydedilmiþ son açýk leveli al (Hiç oynanmamýþsa 1 gelir)
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
 
@@ -46,24 +51,37 @@ public class MainMenuManager : MonoBehaviour
     }
     public void Button_Levels()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         SceneController.Instance.LoadScene("LevelMenu");
     }
     public void Button_Sound()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         soundButtonCounter++;
+        PlayerPrefs.SetInt("SoundButtonCounter", soundButtonCounter);
+
         ButtonCounter(soundButtonCounter, spriteSoundOn, spriteSoundOff, true);
     }
     public void Button_Vibration()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         vibrationButtonCounter++;
+        PlayerPrefs.SetInt("VibrationButtonCounter", vibrationButtonCounter);
+
         ButtonCounter(vibrationButtonCounter, spriteVibrationOn, spriteVibrationOff, false);
     }
     public void Button_Shop()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
         SceneController.Instance.LoadScene("ShopMenu");
     }
     public void Button_PrivacyPolicy()
     {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
 
     }
 
@@ -74,6 +92,12 @@ public class MainMenuManager : MonoBehaviour
             if(isSound)
             {
                 buttonSoundSettings.GetComponent<Image>().sprite = spriteOn;
+
+                // --- AudioManager'a yeni durumu bildir ---
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.ToggleSound(true);
+                }
             }
             else
             {
@@ -81,6 +105,12 @@ public class MainMenuManager : MonoBehaviour
                 buttonVibrationSettings.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 512f);
 
                 buttonVibrationSettings.GetComponent<Image>().sprite = spriteOn;
+
+                // --- VIBRATION MANAGER'A BÝLDÝR ---
+                if (VibrationManager.Instance != null)
+                {
+                    VibrationManager.Instance.ToggleVibration(true);
+                }
             }
         }
         else //Kapama durumu
@@ -88,6 +118,12 @@ public class MainMenuManager : MonoBehaviour
             if(isSound)
             {
                 buttonSoundSettings.GetComponent<Image>().sprite = spriteOff;
+
+                // --- AudioManager'a yeni durumu bildir ---
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.ToggleSound(false);
+                }
             }
             else
             {
@@ -95,6 +131,12 @@ public class MainMenuManager : MonoBehaviour
                 buttonVibrationSettings.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 470f);
 
                 buttonVibrationSettings.GetComponent<Image>().sprite = spriteOff;
+
+                // --- VIBRATION MANAGER'A BÝLDÝR ---
+                if (VibrationManager.Instance != null)
+                {
+                    VibrationManager.Instance.ToggleVibration(false);
+                }
             }
         }
     }
