@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject pnlDeathMenu;
     public GameObject pnlWinMenu;
 
+    public Button btnContinue;
+
     [Header("In Game UI - Top")]
     public TextMeshProUGUI txtTimer;
     public TextMeshProUGUI txtCoinAmount;
@@ -112,6 +114,8 @@ public class UIManager : MonoBehaviour
 
         starCounter.SetActive(false);
         txtTimer.gameObject.SetActive(true);
+
+        btnContinue.gameObject.SetActive(false);
 
         // Coinlerin UI içindeki orijinal (tasarladýðýn) pozisyonlarýný kaydet
         if (animatedCoin1 != null) coin1OrigPos = animatedCoin1.GetComponent<RectTransform>().anchoredPosition;

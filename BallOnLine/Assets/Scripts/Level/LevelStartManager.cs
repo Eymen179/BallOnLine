@@ -1,5 +1,7 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class LevelStartManager : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class LevelStartManager : MonoBehaviour
     [Header("Referanslar")]
     public DrawingManager drawingManager;
     public Rigidbody2D ballRb;
+
+    public GameObject[] tutorialLines;
+    public Image imgTutorial;
 
     private Camera mainCam;
 
@@ -161,10 +166,24 @@ public class LevelStartManager : MonoBehaviour
             // Kodunda olan alt UI engelleyiciyi güvenli bir þekilde kapatýyoruz
             if (UIManager.Instance.pnlBottomUIBlocker != null)
                 UIManager.Instance.pnlBottomUIBlocker.SetActive(false);
+            if(UIManager.Instance.btnContinue != null)
+                UIManager.Instance.btnContinue.gameObject.SetActive(true);
         }
 
         if (ballRb != null) ballRb.simulated = true;
         if (drawingManager != null) drawingManager.isGameActive = true;
+
+        foreach (var obj in tutorialLines)
+        {
+            if(tutorialLines.Count() > 0)
+            {
+                if (obj != null)
+                {
+                    obj.gameObject.SetActive(false);
+                }
+            }
+        }
+        imgTutorial.gameObject.SetActive(false);
 
         // --- EKLENEN KISIM: TÝMER'I BAÞLAT ---
         if (TimerManager.Instance != null)

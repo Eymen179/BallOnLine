@@ -5,6 +5,8 @@ public class BallController : MonoBehaviour
     [Header("Effects")]
     public GameObject explosionPrefab;
 
+    private int currentSizeStep = 0;
+
     // --- YENÝ EKLENEN KISIM: Oyun baþladýðýnda seçili skini kuþanma ---
     private void Start()
     {
@@ -30,15 +32,28 @@ public class BallController : MonoBehaviour
 
     public void ChangeSize(float multiplier)
     {
-        if(multiplier < 1f)
+        if (multiplier < 1f) // Küçültücü
         {
             AudioManager.Instance.PlayAudioClip("Sound_Shrinker");
+
+            // Eðer henüz en küçük boyutta deðilsek (-2'den büyükse)
+            if (currentSizeStep > -2)
+            {
+                currentSizeStep--;
+                transform.localScale *= multiplier;
+            }
         }
-        else
+        else // Büyütücü
         {
             AudioManager.Instance.PlayAudioClip("Sound_Magnifyer");
+
+            // Eðer henüz en büyük boyutta deðilsek (2'den küçükse)
+            if (currentSizeStep < 2)
+            {
+                currentSizeStep++;
+                transform.localScale *= multiplier;
+            }
         }
-            transform.localScale *= multiplier;
     }
 
     public void Die()

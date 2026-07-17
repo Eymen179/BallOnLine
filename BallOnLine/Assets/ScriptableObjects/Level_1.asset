@@ -23,9 +23,9 @@ MonoBehaviour:
   FreezeRefillCount: 1
   ShieldRefillCount: 1
   magnifyMultiplier: 1.5
-  shrinkMultiplier: 0.5
+  shrinkMultiplier: 0.75
   shootingSpeed: 5
   fireInterval: 1.5
-  timeForThreeStars: 5
-  timeForTwoStars: 8
+  timeForThreeStars: 6
+  timeForTwoStars: 10
   timeForOneStar: 15
