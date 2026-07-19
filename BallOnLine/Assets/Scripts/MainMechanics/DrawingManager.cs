@@ -109,8 +109,15 @@ public class DrawingManager : MonoBehaviour
 
     void UpdateLine(Vector2 newFingerPos)
     {
+        if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
+        {
+            newFingerPos.x = Mathf.Clamp(newFingerPos.x, -3.5f, 100f);
+        }
+        else if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
+        {
+            newFingerPos.x = Mathf.Clamp(newFingerPos.x, -11f, 11f);
+        }
         // Çizimin ekran dýþýna taþmasýný engelleme
-        newFingerPos.x = Mathf.Clamp(newFingerPos.x, -11f, 11f);
         fingerPositions.Add(newFingerPos);
 
         lineRenderer.positionCount++;

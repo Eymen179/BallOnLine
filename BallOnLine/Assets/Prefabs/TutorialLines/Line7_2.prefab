@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8228673413692100832
+--- !u!1 &6420356282681504255
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1371423352964047788}
-  - component: {fileID: 2071337340713241521}
-  - component: {fileID: 7158547643061902780}
+  - component: {fileID: 8510523878309367724}
+  - component: {fileID: 9192131968820995862}
+  - component: {fileID: 8611920703474212979}
   m_Layer: 0
-  m_Name: Line
+  m_Name: Line7_2
   m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1371423352964047788
+--- !u!4 &8510523878309367724
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 6420356282681504255}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,14 +33,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &2071337340713241521
+--- !u!120 &9192131968820995862
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 6420356282681504255}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +57,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3542a6fe70d66524986ab58d680ed8d0, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,8 +79,18 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 5.468747, y: 0.64580864, z: 0}
+  - {x: 5.468747, y: 0.64580864, z: 0}
+  - {x: 5.3485975, y: 0.5556962, z: 0}
+  - {x: 5.2284465, y: 0.4355444, z: 0}
+  - {x: 5.138333, y: 0.285357, z: 0}
+  - {x: 5.048221, y: 0.16520709, z: 0}
+  - {x: 5.0782585, y: 0.015018739, z: 0}
+  - {x: 5.228447, y: 0.015018739, z: 0}
+  - {x: 5.3786354, y: -0.015019216, z: 0}
+  - {x: 5.528823, y: -0.045056216, z: 0}
+  - {x: 5.6790104, y: -0.10513165, z: 0}
+  - {x: 5.8291984, y: -0.13516913, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.075
@@ -101,8 +111,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0.22352941, a: 1}
+      key1: {r: 1, g: 0, b: 0.22352941, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -140,13 +150,13 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!68 &7158547643061902780
+--- !u!68 &8611920703474212979
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 6420356282681504255}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -177,8 +187,18 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0.02}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 0.5, y: 0}
+  - {x: 5.468747, y: 0.64580864}
+  - {x: 5.468747, y: 0.64580864}
+  - {x: 5.3485975, y: 0.5556962}
+  - {x: 5.2284465, y: 0.4355444}
+  - {x: 5.138333, y: 0.285357}
+  - {x: 5.048221, y: 0.16520709}
+  - {x: 5.0782585, y: 0.015018739}
+  - {x: 5.228447, y: 0.015018739}
+  - {x: 5.3786354, y: -0.015019216}
+  - {x: 5.528823, y: -0.045056216}
+  - {x: 5.6790104, y: -0.10513165}
+  - {x: 5.8291984, y: -0.13516913}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

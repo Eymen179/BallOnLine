@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8228673413692100832
+--- !u!1 &628799868988727674
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1371423352964047788}
-  - component: {fileID: 2071337340713241521}
-  - component: {fileID: 7158547643061902780}
+  - component: {fileID: 2263134912858445816}
+  - component: {fileID: 2907549555738033642}
+  - component: {fileID: 6449323690610138341}
   m_Layer: 0
-  m_Name: Line
+  m_Name: Line7_3
   m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1371423352964047788
+--- !u!4 &2263134912858445816
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 628799868988727674}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,14 +33,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &2071337340713241521
+--- !u!120 &2907549555738033642
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 628799868988727674}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +57,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3542a6fe70d66524986ab58d680ed8d0, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,8 +79,19 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 5.4387093, y: -0.91614693, z: 0}
+  - {x: 5.4387093, y: -0.91614693, z: 0}
+  - {x: 5.5888968, y: -0.91614693, z: 0}
+  - {x: 5.7390857, y: -0.91614693, z: 0}
+  - {x: 5.8892736, y: -0.91614693, z: 0}
+  - {x: 6.039461, y: -0.91614693, z: 0}
+  - {x: 6.18965, y: -0.91614693, z: 0}
+  - {x: 6.339837, y: -0.91614693, z: 0}
+  - {x: 6.490025, y: -0.97622234, z: 0}
+  - {x: 6.640213, y: -1.0062593, z: 0}
+  - {x: 6.790402, y: -1.0663347, z: 0}
+  - {x: 6.94059, y: -1.0963722, z: 0}
+  - {x: 7.090777, y: -1.0963722, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.075
@@ -101,8 +112,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0.22352941, a: 1}
+      key1: {r: 1, g: 0, b: 0.22352941, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -140,13 +151,13 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!68 &7158547643061902780
+--- !u!68 &6449323690610138341
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228673413692100832}
+  m_GameObject: {fileID: 628799868988727674}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -177,8 +188,19 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0.02}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 0.5, y: 0}
+  - {x: 5.4387093, y: -0.91614693}
+  - {x: 5.4387093, y: -0.91614693}
+  - {x: 5.5888968, y: -0.91614693}
+  - {x: 5.7390857, y: -0.91614693}
+  - {x: 5.8892736, y: -0.91614693}
+  - {x: 6.039461, y: -0.91614693}
+  - {x: 6.18965, y: -0.91614693}
+  - {x: 6.339837, y: -0.91614693}
+  - {x: 6.490025, y: -0.97622234}
+  - {x: 6.640213, y: -1.0062593}
+  - {x: 6.790402, y: -1.0663347}
+  - {x: 6.94059, y: -1.0963722}
+  - {x: 7.090777, y: -1.0963722}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
