@@ -125,7 +125,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 2.14
 --- !u!114 &2121875133350511497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 0
-  txtRefillAmount: {fileID: 0}
 --- !u!114 &4312385850138112845
 MonoBehaviour:
   m_ObjectHideFlags: 0

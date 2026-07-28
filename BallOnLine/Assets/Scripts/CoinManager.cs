@@ -40,4 +40,9 @@ public class CoinManager : MonoBehaviour
             UIManager.Instance.txtCoinAmount.text = coinAmount.ToString();
         }
     }
+
+    public void Button_DebugCoinResetter()
+    {
+        UpdateCoinAmount(-coinAmount); // Coin miktarýný sýfýrla
+    }
 }
