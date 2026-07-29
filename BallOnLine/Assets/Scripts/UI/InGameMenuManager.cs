@@ -28,17 +28,23 @@ public class InGameMenuManager : MonoBehaviour
 
         int nextLevelNum = LevelManager.Instance.currentLevel.levelIndex + 1;
 
-        // Þimdilik 25 level planladýðýn için sýnýr koyuyoruz
-        if (nextLevelNum <= 25 && nextLevelNum > 0)
-        {
-            //SceneController.Instance.LoadScene("Level" + nextLevelNum);
-            SceneController.Instance.LoadScene("Level_" + nextLevelNum);
+        // Hangi sahneye gidileceðini string olarak belirliyoruz
+        string nextSceneName = (nextLevelNum <= 25 && nextLevelNum > 0) ? "Level_" + nextLevelNum : "MainMenu";
 
+        // --- REKLAM VE SAHNE GEÇÝÞ KONTROLÜ (GÜNCELLENDÝ) ---
+        if (AdManager.Instance != null)
+        {
+            // Sahne yükleme iþlemini direkt çaðýrmak yerine, AdManager'a "Görev" olarak veriyoruz.
+            AdManager.Instance.ShowInterstitialIfTime(() =>
+            {
+                // Bu kod bloðu sadece reklam bittiðinde (veya sýra gelmediyse anýnda) çalýþýr!
+                SceneController.Instance.LoadScene(nextSceneName);
+            });
         }
         else
         {
-            // 25. level bitince ana menüye veya "Yeni leveller yakýnda" ekranýna atabilir
-            SceneController.Instance.LoadScene("MainMenu");
+            // Eðer sistemde AdManager yoksa (örneðin test yaparken silmiþsen) direkt yükle
+            SceneController.Instance.LoadScene(nextSceneName);
         }
     }
     /*Pause Menu - Win Menu - Death Menu*/

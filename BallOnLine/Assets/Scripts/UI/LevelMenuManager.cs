@@ -65,11 +65,17 @@ public class LevelMenuManager : MonoBehaviour
                 levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().alpha = 0.3f;
             }
         }
+
+        // Ana menü açýlýnca banner reklamý göster
+        if (AdManager.Instance != null) AdManager.Instance.ShowBanner();
     }
 
     private void LoadLevel(int levelIndex)
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
+        // Oyuna girerken alt bant reklamýný gizle
+        if (AdManager.Instance != null) AdManager.Instance.HideBanner();
 
         SceneController.Instance.LoadScene("Level_" + levelIndex);
     }

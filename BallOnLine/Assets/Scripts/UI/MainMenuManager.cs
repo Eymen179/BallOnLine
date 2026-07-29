@@ -30,6 +30,9 @@ public class MainMenuManager : MonoBehaviour
         {
             ButtonCounter(vibrationButtonCounter, spriteVibrationOn, spriteVibrationOff, false);
         }
+
+        // Ana menü açýlýnca banner reklamý göster
+        if (AdManager.Instance != null) AdManager.Instance.ShowBanner();
     }
 
     // Update is called once per frame
@@ -41,6 +44,9 @@ public class MainMenuManager : MonoBehaviour
     public void Button_Start()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
+        // Oyuna girerken alt bant reklamýný gizle
+        if (AdManager.Instance != null) AdManager.Instance.HideBanner();
 
         // Kaydedilmiþ son açýk leveli al (Hiç oynanmamýþsa 1 gelir)
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
