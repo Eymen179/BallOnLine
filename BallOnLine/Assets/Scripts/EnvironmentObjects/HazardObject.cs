@@ -10,34 +10,50 @@ public class HazardItem : MonoBehaviour, IInteractable
     {
         spikeCol = GetComponent<PolygonCollider2D>();
     }
+
     public void Interact(BallController ball)
     {
         if (ButtonSkillManager.Instance != null)
         {
-            if (!ButtonSkillManager.Instance.isShieldActive)
+            // Kalkan durumunu bir deðiþkene alalým ki kod daha okunaklý olsun
+            bool hasShield = ButtonSkillManager.Instance.isShieldActive;
+
+            if (!hasShield)
             {
+                // --- KALKAN YOKSA ---
                 if (hazardType == HazardType.Spike)
                 {
                     IsSpikeTrigger(true);
                 }
+
+                // Kalkan yoksa top her halükarda ölür
                 ball.Die();
+
+                // Eðer objemiz mermiyse, topu patlattýktan sonra mermi de yok olsun
+                // (Ölü topun içinden hayalet gibi geçip gitmemesi için)
+                if (hazardType == HazardType.Projectile)
+                {
+                    Destroy(gameObject);
+                }
             }
             else
             {
-                if(hazardType == HazardType.Spike)
+                // --- KALKAN VARSA ---
+                if (hazardType == HazardType.Spike)
                 {
+                    // Diken katýlaþýr, top üzerinde rahatça gezer
                     IsSpikeTrigger(false);
                 }
+                else if (hazardType == HazardType.Projectile)
+                {
+                    // Mermi kalkanlý topa çarptý!
+                    // Top ölmez (ball.Die çalýþmaz), sadece mermi duvara çarpmýþ gibi yok olur!
+                    Destroy(gameObject);
+                }
             }
-            // --- YENÝ EKLENEN KISIM ---
-            // Eðer objemiz mermiyse, topa çarptýðý an (kalkan olsa da olmasa da) yok olsun.
-            if (hazardType == HazardType.Projectile)
-            {
-                ball.Die();
-            }
-            // -------------------------
         }
     }
+
     public void IsSpikeTrigger(bool isTrigger)
     {
         if (spikeCol != null)
@@ -46,23 +62,16 @@ public class HazardItem : MonoBehaviour, IInteractable
         }
     }
 
-    // --- DUVARA/ZEMÝNE ÇARPMA KONTROLÜ (YENÝ EKLENDÝ) ---
+    // --- DUVARA/ZEMÝNE ÇARPMA KONTROLÜ ---
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Sadece mermi ise bu kontrolü yapýyoruz (Dikenlerin duvarda durmasý gerekir)
         if (hazardType == HazardType.Projectile)
         {
-            // 1. Çarptýðýmýz obje top DEÐÝLSE (Çünkü topla çarpýþmayý zaten üstteki Interact() hallediyor)
             if (collision.GetComponent<BallController>() == null)
             {
-                // 2. Çarptýðýmýz obje bir Trigger DEÐÝLSE (Yani katý bir zemin veya duvar ise)
-                // Bu sayede mermi LevelBounds'a, Altýnlara veya Portala çarpýnca yanlýþlýkla yok olmaz!
                 if (!collision.isTrigger)
                 {
-                    // Duvara çarptýðý anda mermiyi yok et
                     Destroy(gameObject);
-
-                    // ÝPUCU: Ýleride buraya "duvara çarpma partikül efekti" (Instantiate) ekleyebilirsin.
                 }
             }
         }

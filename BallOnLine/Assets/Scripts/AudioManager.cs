@@ -47,6 +47,20 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    // Metoda taretin nerede olduðunu (Vector3) parametre olarak ekliyoruz
+    public void PlayFireAudio(Vector3 sourcePosition)
+    {
+        if (!isSoundOn) return;
+
+        AudioClip fireClip = audioSounds.Find(clip => clip.name == "Sound_TurretFire");
+
+        if (fireClip != null)
+        {
+            // Belirtilen koordinatta anlýk bir 3D ses objesi oluþturur ve çalar
+            AudioSource.PlayClipAtPoint(fireClip, sourcePosition);
+        }
+    }
+
     // Ana menüden (MainMenuManager'dan) çaðrýlacak metot
     public void ToggleSound(bool soundState)
     {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using DG.Tweening; // DOTween kütüphanesi
+using DG.Tweening;
 using System.Collections;
 
 public class Turret : MonoBehaviour
@@ -18,6 +18,12 @@ public class Turret : MonoBehaviour
     public float recoilDistance = 0.3f;
     public float recoilDuration = 0.2f;
 
+    // --- YENÝ EKLENEN DEÐÝÞKEN ---
+    [Header("Ateþleme Ayarlarý")]
+    [Tooltip("Oyun baþladýðýnda bu taretin ne kadar geç ateþe baþlayacaðý (Saniye)")]
+    public float initialDelay = 0f;
+    // ----------------------------
+
     private Vector3 originalBarrelPos;
 
     void Start()
@@ -32,6 +38,14 @@ public class Turret : MonoBehaviour
 
     IEnumerator ShootRoutine()
     {
+        // --- YENÝ EKLENEN KISIM ---
+        // Eðer Inspector üzerinden bir gecikme deðeri verildiyse, sonsuz döngüye girmeden önce bir defaya mahsus bekle.
+        if (initialDelay > 0f)
+        {
+            yield return new WaitForSeconds(initialDelay);
+        }
+        // --------------------------
+
         while (true)
         {
             yield return new WaitForSeconds(LevelManager.Instance.currentLevel.fireInterval);
@@ -43,11 +57,9 @@ public class Turret : MonoBehaviour
     {
         if (barrel == null) return;
 
-        // EÐER ÇOK HIZLI ATEÞ EDÝLÝYORSA: Önceki animasyonu ezmemesi için DOTween'i durdurup namluyu sýfýrla
         barrel.DOKill();
         barrel.localPosition = originalBarrelPos;
 
-        // --- GERÝ TEPME ANÝMASYONU ---
         Sequence recoilSeq = DOTween.Sequence();
 
         recoilSeq.Append(barrel.DOLocalMoveX(originalBarrelPos.x + recoilDistance, recoilDuration * 0.3f)
@@ -55,22 +67,18 @@ public class Turret : MonoBehaviour
         recoilSeq.Append(barrel.DOLocalMoveX(originalBarrelPos.x, recoilDuration * 0.7f)
                  .SetEase(Ease.OutSine));
 
-        // --- MERMÝ ÜRETÝMÝ VE HAREKETÝ ---
         if (projectilePrefab != null && firePoint != null)
         {
-            AudioManager.Instance.PlayAudioClip("Sound_TurretFire"); // Ateþ sesi çal
-            // Mermiyi namlu ucunda (firePoint) üret
+            AudioManager.Instance.PlayFireAudio(transform.position);
+
             GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
-            // Mermiye fiziksel bir hýz ver (Level.cs içindeki shootingSpeed'i çekiyoruz)
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null && LevelManager.Instance != null && LevelManager.Instance.currentLevel != null)
             {
-                // firePoint.right = Namlunun baktýðý yön (X ekseni)
                 rb.linearVelocity = firePoint.up * LevelManager.Instance.currentLevel.shootingSpeed;
             }
 
-            // RAM Tasarrufu: Mermi bir yere çarpmazsa 5 saniye sonra sahneden silinsin
             Destroy(bullet, 5f);
         }
     }
