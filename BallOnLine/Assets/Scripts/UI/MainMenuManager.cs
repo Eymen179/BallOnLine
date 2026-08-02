@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,10 @@ public class MainMenuManager : MonoBehaviour
 
     private int soundButtonCounter = 0;
     private int vibrationButtonCounter = 0;
+
+    public TextMeshProUGUI txtComingSoon;
+    public string comingSoonSceneName = "Level_26";
+
     void Start()
     {
         soundButtonCounter = PlayerPrefs.GetInt("SoundButtonCounter", 0);
@@ -30,6 +35,8 @@ public class MainMenuManager : MonoBehaviour
         {
             ButtonCounter(vibrationButtonCounter, spriteVibrationOn, spriteVibrationOff, false);
         }
+
+        txtComingSoon.gameObject.SetActive(false);
 
         // Ana menü açýlýnca banner reklamý göster
         if (AdManager.Instance != null) AdManager.Instance.ShowBanner();
@@ -45,15 +52,19 @@ public class MainMenuManager : MonoBehaviour
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
 
-        // Oyuna girerken alt bant reklamýný gizle
-        if (AdManager.Instance != null) AdManager.Instance.HideBanner();
-
         // Kaydedilmiþ son açýk leveli al (Hiç oynanmamýþsa 1 gelir)
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
 
+        string unlockedLevelString = "Level_" + unlockedLevel;
+
+        if(unlockedLevelString != comingSoonSceneName)
+        {
+            // Oyuna girerken alt bant reklamýný gizle
+            if (AdManager.Instance != null) AdManager.Instance.HideBanner();
+        }
         // Ýlgili sahneyi yükle
         //SceneController.Instance.LoadScene("Level" + unlockedLevel);
-        SceneController.Instance.LoadScene("Level_" + unlockedLevel);
+        SceneController.Instance.LoadScene(unlockedLevelString);
     }
     public void Button_Levels()
     {

@@ -17,4 +17,4 @@ MonoBehaviour:
   shopItemMaterial: {fileID: 2100000, guid: da5dfc2a4a34ebf40a28f465ca8901f7, type: 2}
   shopItemColor: {r: 1, g: 1, b: 1, a: 1}
   requiredStars: 30
-  coinCost: 250
+  coinCost: 400
