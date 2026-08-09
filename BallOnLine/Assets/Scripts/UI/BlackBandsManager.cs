@@ -15,7 +15,6 @@ public class BlackBandsManager : MonoBehaviour
 
     void Update()
     {
-        // Ekran döndürme veya simülatör deðiþikliklerinde anlýk tepki vermesi için
         if (lastSafeArea != Screen.safeArea)
         {
             ApplyBands();
@@ -27,21 +26,28 @@ public class BlackBandsManager : MonoBehaviour
         Rect safeArea = Screen.safeArea;
         lastSafeArea = safeArea;
 
-        // Üstteki güvensiz alanýn (çentik) piksel cinsinden yüksekliði
-        float topOffset = Screen.height - (safeArea.y + safeArea.height);
+        // Ekran oranlarýný 0 ile 1 arasýna çeviriyoruz (Týpký SafeArea.cs'deki mantýk)
+        float safeAreaTopY = (safeArea.y + safeArea.height) / Screen.height;
+        float safeAreaBottomY = safeArea.y / Screen.height;
 
-        // Alttaki güvensiz alanýn piksel cinsinden yüksekliði
-        float bottomOffset = safeArea.y;
-
-        // Bantlarýn yüksekliklerini, hesaplanan bu piksel boþluklarýna eþitliyoruz
+        // --- ÜST BANT ---
+        // Ekranýn en üstünden (1), Güvenli alanýn bittiði yere kadar (safeAreaTopY) uzat
         if (topBand != null)
         {
-            topBand.sizeDelta = new Vector2(topBand.sizeDelta.x, topOffset);
+            topBand.anchorMin = new Vector2(0, safeAreaTopY);
+            topBand.anchorMax = new Vector2(1, 1);
+            topBand.offsetMin = Vector2.zero; // Sol ve Alt boþluklarý sýfýrla
+            topBand.offsetMax = Vector2.zero; // Sað ve Üst boþluklarý sýfýrla
         }
 
+        // --- ALT BANT ---
+        // Ekranýn en altýndan (0), Güvenli alanýn baþladýðý yere kadar (safeAreaBottomY) uzat
         if (bottomBand != null)
         {
-            bottomBand.sizeDelta = new Vector2(bottomBand.sizeDelta.x, bottomOffset);
+            bottomBand.anchorMin = new Vector2(0, 0);
+            bottomBand.anchorMax = new Vector2(1, safeAreaBottomY);
+            bottomBand.offsetMin = Vector2.zero;
+            bottomBand.offsetMax = Vector2.zero;
         }
     }
 }

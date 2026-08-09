@@ -53,6 +53,9 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_ballShop, 1f);
         ButtonSettings(button_lineShop, 0.5f);
         ButtonSettings(button_trailShop, 0.5f);
+
+        // Ana menü açýlýnca banner reklamý göster
+        if (AdManager.Instance != null) AdManager.Instance.ShowBanner();
     }
 
     // Update is called once per frame

@@ -5691,17 +5691,9 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1231521968}
-    - target: {fileID: 2726659006592507939, guid: 031851a37a52a8043ad4c14b4862b1c7, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4262490662758701178, guid: 031851a37a52a8043ad4c14b4862b1c7, type: 3}
       propertyPath: m_Name
       value: UI_BlackBands
-      objectReference: {fileID: 0}
-    - target: {fileID: 4262490662758701178, guid: 031851a37a52a8043ad4c14b4862b1c7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5821,10 +5813,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 862660066}
     - target: {fileID: 1641418598886418751, guid: d1b13ea577a2e8e4ab30c7be8c5e82f8, type: 3}
-      propertyPath: m_Color.a
-      value: 0.47058824
-      objectReference: {fileID: 0}
-    - target: {fileID: 1641418598886418751, guid: d1b13ea577a2e8e4ab30c7be8c5e82f8, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 1003374240}
@@ -5872,14 +5860,6 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 457159078}
-    - target: {fileID: 4988167530113281035, guid: d1b13ea577a2e8e4ab30c7be8c5e82f8, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4988167530113281035, guid: d1b13ea577a2e8e4ab30c7be8c5e82f8, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5039865034894993510, guid: d1b13ea577a2e8e4ab30c7be8c5e82f8, type: 3}
       propertyPath: m_Material
       value: 

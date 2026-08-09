@@ -100,6 +100,8 @@ public class MainMenuManager : MonoBehaviour
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
 
+
+        Application.OpenURL("https://sites.google.com/view/abudev-privacy-policy/");
     }
 
     private void ButtonCounter(int counter, Sprite spriteOn, Sprite spriteOff, bool isSound)
