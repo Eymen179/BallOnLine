@@ -27,5 +27,5 @@ MonoBehaviour:
   shootingSpeed: 3
   fireInterval: 1
   timeForThreeStars: 5
-  timeForTwoStars: 8
-  timeForOneStar: 12
+  timeForTwoStars: 9
+  timeForOneStar: 15

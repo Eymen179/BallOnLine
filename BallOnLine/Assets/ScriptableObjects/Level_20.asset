@@ -26,6 +26,6 @@ MonoBehaviour:
   shrinkMultiplier: 0.75
   shootingSpeed: 1
   fireInterval: 1.5
-  timeForThreeStars: 14
-  timeForTwoStars: 20
+  timeForThreeStars: 16
+  timeForTwoStars: 25
   timeForOneStar: 30
