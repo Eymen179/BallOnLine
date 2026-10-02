@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -150,7 +152,7 @@ public class LevelStartManager : MonoBehaviour
         cameraFollowTarget.position = newPos;
     }
 
-    public void StartLevelPlay()
+    /*public void StartLevelPlay()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
 
@@ -194,5 +196,84 @@ public class LevelStartManager : MonoBehaviour
         //Zaman Tablosu
         UIManager.Instance.pnlTimeTable.SetActive(false);
         UIManager.Instance.btnTimeTable.gameObject.SetActive(false);
+    }*/
+    public void StartLevelPlay()
+    {
+        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
+        // Pan modunu anýnda kapat ki oyuncu sayaç anýnda ekraný kaydýramasýn
+        isPanningMode = false;
+        vcamPan.SetActive(false);
+        vcamFollow.SetActive(true);
+
+        if (UIManager.Instance != null && UIManager.Instance.btnStartLevel != null)
+        {
+            // Start ve zaman tablosu butonlarýný hemen gizliyoruz
+            UIManager.Instance.btnStartLevel.SetActive(false);
+            UIManager.Instance.pnlTimeTable.SetActive(false);
+            UIManager.Instance.btnTimeTable.gameObject.SetActive(false);
+        }
+
+        // Oyunu hemen baþlatmak yerine geri sayým döngüsünü tetikliyoruz
+        StartCoroutine(CountdownRoutine());
+    }
+
+    private IEnumerator CountdownRoutine()
+    {
+        if (UIManager.Instance != null && UIManager.Instance.txtCountdown != null)
+        {
+            UIManager.Instance.txtCountdown.gameObject.SetActive(true);
+
+            // 3'ten 1'e doðru geri sayým
+            for (int i = 3; i > 0; i--)
+            {
+                UIManager.Instance.txtCountdown.text = i.ToString();
+
+                // UIManager'daki tarzýmýza uygun (OutBack) tatlý bir zýplama efekti
+                UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
+                UIManager.Instance.txtCountdown.transform.DOScale(7f, 0.3f).SetEase(Ease.OutBack);
+
+                yield return new WaitForSeconds(1f);
+            }
+
+            // Süre bitince GO! yazýsý
+            UIManager.Instance.txtCountdown.text = "GO!";
+            UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
+            UIManager.Instance.txtCountdown.transform.DOScale(7f, 0.3f).SetEase(Ease.OutBack);
+        }
+
+        // --- ASIL OYUN BAÞLANGICI ---
+        if (UIManager.Instance != null)
+        {
+            if (UIManager.Instance.pnlBottomUIBlocker != null)
+                UIManager.Instance.pnlBottomUIBlocker.SetActive(false);
+            if (UIManager.Instance.btnContinue != null)
+                UIManager.Instance.btnContinue.gameObject.SetActive(true);
+        }
+
+        if (ballRb != null) ballRb.simulated = true;
+        if (drawingManager != null) drawingManager.isGameActive = true;
+
+        if (tutorialLines != null)
+        {
+            foreach (var obj in tutorialLines)
+            {
+                if (obj != null) obj.gameObject.SetActive(false);
+            }
+        }
+        if (imgTutorial != null) imgTutorial.gameObject.SetActive(false);
+
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.StartTimer();
+        }
+
+        // GO yazýsýný ekranda 0.7 saniye tutup ardýndan tamamen kapatýyoruz
+        yield return new WaitForSeconds(0.7f);
+
+        if (UIManager.Instance != null && UIManager.Instance.txtCountdown != null)
+        {
+            UIManager.Instance.txtCountdown.gameObject.SetActive(false);
+        }
     }
 }

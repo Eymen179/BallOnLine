@@ -1,23 +1,24 @@
+using System.Collections; // Coroutine için eklendi
+using DG.Tweening;        // Animasyonlar için eklendi
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InGameMenuManager : MonoBehaviour
 {
-
     public DrawingManager drawingManager;
     public Rigidbody2D ballRb;
 
     private int button_TimeTableCounter = 0;
+
     private void Start()
     {
-        
+
     }
+
     /*Pause Menu - Win Menu - Death Menu*/
     public void Button_RestartLevel()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
-
-        // Mevcut sahneyi tekrar yükler
         SceneController.Instance.LoadScene(SceneManager.GetActiveScene().name);
     }
     //-------------------------------------------------------------------------------
@@ -27,23 +28,17 @@ public class InGameMenuManager : MonoBehaviour
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
 
         int nextLevelNum = LevelManager.Instance.currentLevel.levelIndex + 1;
-
-        // Hangi sahneye gidileceðini string olarak belirliyoruz
         string nextSceneName = (nextLevelNum <= 25 && nextLevelNum > 0) ? "Level_" + nextLevelNum : "MainMenu";
 
-        // --- REKLAM VE SAHNE GEÇÝÞ KONTROLÜ (GÜNCELLENDÝ) ---
         if (AdManager.Instance != null)
         {
-            // Sahne yükleme iþlemini direkt çaðýrmak yerine, AdManager'a "Görev" olarak veriyoruz.
             AdManager.Instance.ShowInterstitialIfTime(() =>
             {
-                // Bu kod bloðu sadece reklam bittiðinde (veya sýra gelmediyse anýnda) çalýþýr!
                 SceneController.Instance.LoadScene(nextSceneName);
             });
         }
         else
         {
-            // Eðer sistemde AdManager yoksa (örneðin test yaparken silmiþsen) direkt yükle
             SceneController.Instance.LoadScene(nextSceneName);
         }
     }
@@ -51,8 +46,6 @@ public class InGameMenuManager : MonoBehaviour
     public void Button_BackToMainMenu()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
-
-        // Ana menü sahnesinin adýnýn "MainMenu" olduðunu varsayýyorum
         SceneController.Instance.LoadScene("MainMenu");
     }
     /*In-Game UI*/
@@ -66,24 +59,54 @@ public class InGameMenuManager : MonoBehaviour
         {
             drawingManager.isGameActive = false;
         }
-        // Topun fiziðini donduruyoruz (Aþaðý düþmemesi için)
         if (ballRb != null)
         {
             ballRb.simulated = false;
         }
-        // --- EKLENEN KISIM: TÝMER'I DURAKLAT ---
         if (TimerManager.Instance != null)
         {
             TimerManager.Instance.StopTimer();
         }
     }
+
     /*Pause Menu*/
     public void Button_Continue()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
 
+        // Paneli kapatýyoruz ama oyunu anýnda baþlatmýyoruz
         UIManager.Instance.ClosePanel(UIManager.Instance.pnlPauseMenu);
 
+        // Geri sayým döngüsünü tetikliyoruz
+        StartCoroutine(ResumeCountdownRoutine());
+    }
+
+    // --- EKLENEN KISIM: DEVAM ETME GERÝ SAYIMI ---
+    private IEnumerator ResumeCountdownRoutine()
+    {
+        if (UIManager.Instance != null && UIManager.Instance.txtCountdown != null)
+        {
+            UIManager.Instance.txtCountdown.gameObject.SetActive(true);
+
+            // 3'ten 1'e doðru geri sayým
+            for (int i = 3; i > 0; i--)
+            {
+                UIManager.Instance.txtCountdown.text = i.ToString();
+
+                UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
+                // SetUpdate(true) ekleyerek, eðer ileride timeScale kullanýrsan animasyonun donmamasýný garantiye alýyoruz
+                UIManager.Instance.txtCountdown.transform.DOScale(7f, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
+
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            // Süre bitince GO! yazýsý
+            UIManager.Instance.txtCountdown.text = "GO!";
+            UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
+            UIManager.Instance.txtCountdown.transform.DOScale(7f, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
+        }
+
+        // --- ASIL OYUN DEVAMI ---
         if (drawingManager != null)
         {
             drawingManager.isGameActive = true;
@@ -93,18 +116,26 @@ public class InGameMenuManager : MonoBehaviour
         {
             ballRb.simulated = true;
         }
-        // --- EKLENEN KISIM: TÝMER'I DEVAM ETTÝR ---
         if (TimerManager.Instance != null)
         {
             TimerManager.Instance.StartTimer();
         }
+
+        // GO yazýsýný ekranda 0.7 saniye tutup kapatýyoruz
+        yield return new WaitForSeconds(0.7f);
+
+        if (UIManager.Instance != null && UIManager.Instance.txtCountdown != null)
+        {
+            UIManager.Instance.txtCountdown.gameObject.SetActive(false);
+        }
     }
+
     public void Button_TimeTable()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
 
         button_TimeTableCounter++;
-        if(button_TimeTableCounter % 2 == 1)
+        if (button_TimeTableCounter % 2 == 1)
         {
             UIManager.Instance.pnlTimeTable.SetActive(true);
         }

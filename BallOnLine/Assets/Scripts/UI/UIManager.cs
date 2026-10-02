@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Before Level Start")]
     public GameObject btnStartLevel;
+    public TextMeshProUGUI txtCountdown;
 
     [Header("Level Finish")]
     public Image star1;
