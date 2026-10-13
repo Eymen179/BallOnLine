@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem; // Yeni Input System kütüphanesi eklendi
+using UnityEngine.UI;
+using UnityEngine.EventSystems; // --- 1. YENÝ EKLENDÝ: UI Tespiti Ýçin ---
 
 public class DrawingManager : MonoBehaviour
 {
@@ -45,7 +46,11 @@ public class DrawingManager : MonoBehaviour
     void Update()
     {
         // Level donuk durumdayken çizim yapýlmasýný engeller
-        if (!isGameActive) return;
+        if (!isGameActive)
+        {
+            if (AudioManager.Instance != null) AudioManager.Instance.StopDrawingSound();
+            return;
+        }
 
         UpdateDrawingProgressBar();
         if (inkAmountText != null)
@@ -59,7 +64,16 @@ public class DrawingManager : MonoBehaviour
         // Yeni Input System ile basýlma ve pozisyon verilerini okuma
         bool isPressedDown = Pointer.current.press.wasPressedThisFrame;
         bool isHeldDown = Pointer.current.press.isPressed;
+        bool isReleased = Pointer.current.press.wasReleasedThisFrame;
+
         Vector2 pointerScreenPos = Pointer.current.position.ReadValue();
+
+
+        bool isPointerOverUI = false;
+        if (EventSystem.current != null)
+        {
+            isPointerOverUI = EventSystem.current.IsPointerOverGameObject();
+        }
 
         // Parmaðýmýzla bir kere bastýðýmýzda yapýlacak iþlemler
         if (isPressedDown && inkAmount > 0f)
@@ -67,7 +81,8 @@ public class DrawingManager : MonoBehaviour
             CreateLine(pointerScreenPos);
             UpdateInkAmount(inkDecreaseRate);
 
-            //Ses
+            // Çizim sesini baþlat
+            if (AudioManager.Instance != null) AudioManager.Instance.StartDrawingSound();
         }
         // Parmaðýmýzý basýlý tuttuðumuzda yapýlacak iþlemler
         else if (isHeldDown && inkAmount > 0f)
@@ -80,13 +95,40 @@ public class DrawingManager : MonoBehaviour
                 UpdateLine(tempFingerPos);
                 UpdateInkAmount(inkDecreaseRate);
             }
+
+            // --- YENÝ EKLENEN PITCH MATEMATÝÐÝ ---
+            if (AudioManager.Instance != null)
+            {
+                float calculatedPitch = 1f; // Standart pitch (Normal ses)
+
+                if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
+                {
+                    // Y ekseninde -11 ile 11 arasýnda bir level olduðunu farz ediyoruz (Clamp sýnýrlarýna göre)
+                    // InverseLerp: -11'deyken 0 verir, 11'deyken 1 verir.
+                    float normalizedY = Mathf.InverseLerp(-4f, 4f, tempFingerPos.x);
+
+                    // Sonra bunu 0.5 (Tok/Kalýn) ile 1.5 (Tiz) arasýna çeviriyoruz.
+                    calculatedPitch = Mathf.Lerp(0.5f, 1.5f, normalizedY);
+                }
+                else if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
+                {
+                    // X ekseninde -3.5 ile 100 arasýnda bir level olduðunu farz ediyoruz
+                    float normalizedX = Mathf.InverseLerp(-7.5f, 7.5f, tempFingerPos.y);
+                    calculatedPitch = Mathf.Lerp(0.5f, 1.5f, normalizedX);
+                }
+
+                AudioManager.Instance.UpdateDrawingPitch(calculatedPitch);
+            }
+        }
+        // Mürekkep bittiyse veya parmak çekildiyse sesi durdur
+        else if (isReleased || inkAmount <= 0f)
+        {
+            if (AudioManager.Instance != null) AudioManager.Instance.StopDrawingSound();
         }
     }
 
     void CreateLine(Vector2 screenPos)
     {
-        AudioManager.Instance.PlayAudioClip("Sound_Drawing");
-
         lineCount++;
         currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
         lines.Add(currentLine);
