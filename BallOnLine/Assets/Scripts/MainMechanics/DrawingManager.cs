@@ -103,7 +103,6 @@ public class DrawingManager : MonoBehaviour
 
                 if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
                 {
-                    // Y ekseninde -11 ile 11 arasýnda bir level olduðunu farz ediyoruz (Clamp sýnýrlarýna göre)
                     // InverseLerp: -11'deyken 0 verir, 11'deyken 1 verir.
                     float normalizedY = Mathf.InverseLerp(-4f, 4f, tempFingerPos.x);
 
@@ -112,7 +111,6 @@ public class DrawingManager : MonoBehaviour
                 }
                 else if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
                 {
-                    // X ekseninde -3.5 ile 100 arasýnda bir level olduðunu farz ediyoruz
                     float normalizedX = Mathf.InverseLerp(-7.5f, 7.5f, tempFingerPos.y);
                     calculatedPitch = Mathf.Lerp(0.5f, 1.5f, normalizedX);
                 }
