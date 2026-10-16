@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class ShopItemUI : MonoBehaviour
 {
-    [Header("Data")]
+    [Header("Category & Data")]
+    public ShopCategory itemCategory = ShopCategory.Ball; // Varsayýlan Ball, Trail objelerinde Trail seçilecek
     public ShopItemSO itemData;
 
     [Header("Shared Icons (Ortak Görseller)")]
@@ -25,8 +26,6 @@ public class ShopItemUI : MonoBehaviour
 
     private void Awake()
     {
-        // Sadece etkileþime girilebilen (Yeþil ve Koyu Mavi) butonlara týklanma özelliði ekliyoruz.
-        // Böylece Inspector'dan tek tek OnClick atamakla uðraþmayacaksýn.
         if (btnCanBuy != null)
         {
             Button btnGreen = btnCanBuy.GetComponent<Button>();
@@ -42,20 +41,32 @@ public class ShopItemUI : MonoBehaviour
 
     public void Setup(ShopItemState state)
     {
-        // 1. Ortak Verileri Doldur
-        if (imgBall != null) imgBall.sprite = itemData.shopImage;
+        // 1. Ortak Verileri Doldur (Eðer shopImage boþsa mevcut beyaz top görselini bozma!)
+        if (imgBall != null && itemData.shopImage != null)
+        {
+            imgBall.sprite = itemData.shopImage;
+        }
+
+        // Eðer bu bir Trail kutucuðuysa, üzerindeki önizleme TrailRenderer'ýna SO ayarlarýný otomatik uygula
+        if (itemCategory == ShopCategory.Trail && imgBall != null)
+        {
+            TrailRenderer previewTrail = imgBall.GetComponent<TrailRenderer>();
+            if (previewTrail != null)
+            {
+                itemData.ApplyToTrailRenderer(previewTrail);
+            }
+        }
+
         if (txtStarRequirement != null) txtStarRequirement.text = itemData.requiredStars.ToString();
         if (txtCostCanBuy != null) txtCostCanBuy.text = itemData.coinCost.ToString();
         if (txtCostCannotBuy != null) txtCostCannotBuy.text = itemData.coinCost.ToString();
 
-        // 2. Önce Tüm Butonlarý Gizle (Temizlik)
         if (btnLocked != null) btnLocked.SetActive(false);
         if (btnCanNotBuy != null) btnCanNotBuy.SetActive(false);
         if (btnCanBuy != null) btnCanBuy.SetActive(false);
         if (btnUsing != null) btnUsing.SetActive(false);
         if (btnUse != null) btnUse.SetActive(false);
 
-        // 3. Duruma (State) Göre Sadece Ýlgili Ýkonu ve Butonu Aç
         switch (state)
         {
             case ShopItemState.Locked_Gray:
@@ -94,11 +105,18 @@ public class ShopItemUI : MonoBehaviour
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
 
-        BallShopManager.Instance.OnShopItemClicked(this);
+        // Týklanan kutucuðun kategorisine göre ilgili Manager'ý tetikle
+        if (itemCategory == ShopCategory.Ball && BallShopManager.Instance != null)
+        {
+            BallShopManager.Instance.OnShopItemClicked(this);
+        }
+        else if (itemCategory == ShopCategory.Trail && TrailShopManager.Instance != null)
+        {
+            TrailShopManager.Instance.OnShopItemClicked(this);
+        }
     }
 }
 
-// (ShopItemState enum'u zaten ayný kalsýn)
 public enum ShopItemState
 {
     Locked_Gray,
@@ -106,4 +124,10 @@ public enum ShopItemState
     CanBuy_Green,
     Equipped_LightBlue,
     Owned_DarkBlue
+}
+public enum ShopCategory
+{
+    Ball,
+    Trail,
+    Line
 }

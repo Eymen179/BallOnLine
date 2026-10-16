@@ -7,6 +7,9 @@ public class SkinManager : MonoBehaviour
     [Header("All Ball Skins")]
     public ShopItemSO[] allBallSkins; // Tüm Top SO dosyalarýný buraya sürükle
 
+    [Header("All Trail Skins")]
+    public ShopItemSO[] allTrailSkins; // Tüm Trail SO dosyalarýný buraya sürükle
+
     private void Awake()
     {
         if (Instance == null)
@@ -17,7 +20,6 @@ public class SkinManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // Oyun içindeki herhangi bir scriptin aktif skin'i öðrenmesi için
     public ShopItemSO GetEquippedBallSkin()
     {
         string equippedID = PlayerPrefs.GetString("EquippedBallSkin", "Ball1");
@@ -28,6 +30,19 @@ public class SkinManager : MonoBehaviour
         }
 
         if (allBallSkins.Length > 0) return allBallSkins[0];
+        return null;
+    }
+
+    public ShopItemSO GetEquippedTrailSkin()
+    {
+        string equippedID = PlayerPrefs.GetString("EquippedTrailSkin", "Trail1");
+
+        foreach (var trail in allTrailSkins)
+        {
+            if (trail.itemID == equippedID) return trail;
+        }
+
+        if (allTrailSkins.Length > 0) return allTrailSkins[0];
         return null;
     }
 }

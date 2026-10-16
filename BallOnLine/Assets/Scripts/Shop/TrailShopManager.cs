@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallShopManager : MonoBehaviour
+public class TrailShopManager : MonoBehaviour
 {
-    public static BallShopManager Instance;
+    public static TrailShopManager Instance;
 
-    [Header("Shop References")]
-    public List<ShopItemUI> allBallItems;
+    [Header("Trail Shop References")]
+    public List<ShopItemUI> allTrailItems;
 
-    private string currentEquippedBallID;
+    private string currentEquippedTrailID;
 
     private void Awake()
     {
@@ -17,7 +17,8 @@ public class BallShopManager : MonoBehaviour
 
     private void Start()
     {
-        currentEquippedBallID = PlayerPrefs.GetString("EquippedBallSkin", "Ball1");
+        // Varsayýlan olarak "Trail1" seçili gelir
+        currentEquippedTrailID = PlayerPrefs.GetString("EquippedTrailSkin", "Trail1");
         RefreshShopUI();
     }
 
@@ -26,16 +27,19 @@ public class BallShopManager : MonoBehaviour
         int totalStars = StarManager.Instance != null ? StarManager.Instance.totalStars : 0;
         int totalCoins = CoinManager.Instance != null ? CoinManager.Instance.coinAmount : 0;
 
-        foreach (var itemUI in allBallItems)
+        foreach (var itemUI in allTrailItems)
         {
+            if (itemUI == null || itemUI.itemData == null) continue;
+
             ShopItemSO data = itemUI.itemData;
             bool isOwned = PlayerPrefs.GetInt("SkinOwned_" + data.itemID, 0) == 1;
 
-            if (data.itemID == "Ball1") isOwned = true;
+            // Ýlk trail her zaman oyuncuya açýk ve ücretsizdir
+            if (data.itemID == "Trail1") isOwned = true;
 
             if (isOwned)
             {
-                if (currentEquippedBallID == data.itemID) itemUI.Setup(ShopItemState.Equipped_LightBlue);
+                if (currentEquippedTrailID == data.itemID) itemUI.Setup(ShopItemState.Equipped_LightBlue);
                 else itemUI.Setup(ShopItemState.Owned_DarkBlue);
             }
             else
@@ -51,11 +55,11 @@ public class BallShopManager : MonoBehaviour
     {
         ShopItemSO data = clickedItem.itemData;
         bool isOwned = PlayerPrefs.GetInt("SkinOwned_" + data.itemID, 0) == 1;
-        if (data.itemID == "Ball1") isOwned = true;
+        if (data.itemID == "Trail1") isOwned = true;
 
         if (isOwned)
         {
-            EquipSkin(data);
+            EquipTrail(data);
         }
         else
         {
@@ -64,22 +68,28 @@ public class BallShopManager : MonoBehaviour
             {
                 CoinManager.Instance.UpdateCoinAmount(-data.coinCost);
                 PlayerPrefs.SetInt("SkinOwned_" + data.itemID, 1);
-                EquipSkin(data);
+                EquipTrail(data);
 
                 if (ShopMenuManager.Instance != null && ShopMenuManager.Instance.txtTotalCoins != null)
                 {
                     ShopMenuManager.Instance.txtTotalCoins.text = CoinManager.Instance.coinAmount.ToString();
                 }
+
+                // Coin azaldýðý için diðer market sekmesindeki (Ball) satýn alma durumlarýný da yenile
+                if (BallShopManager.Instance != null)
+                {
+                    BallShopManager.Instance.RefreshShopUI();
+                }
             }
         }
     }
 
-    private void EquipSkin(ShopItemSO data)
+    private void EquipTrail(ShopItemSO data)
     {
-        currentEquippedBallID = data.itemID;
-        PlayerPrefs.SetString("EquippedBallSkin", data.itemID);
+        currentEquippedTrailID = data.itemID;
+        PlayerPrefs.SetString("EquippedTrailSkin", data.itemID);
         PlayerPrefs.Save();
 
-        RefreshShopUI(); // Renkler güncellenir
+        RefreshShopUI();
     }
 }

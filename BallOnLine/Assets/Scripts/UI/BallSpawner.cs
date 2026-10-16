@@ -6,8 +6,11 @@ public class BallSpawner : MonoBehaviour
     public Transform[] spawnPoints;
     public float spawnInterval = 4f;
 
+    [Tooltip("Boþ býrakýrsan alt objelerdeki (Child) TrailRenderer'ý otomatik bulur.")]
+    public TrailRenderer ballTrail;
+
     void Start()
-    {
+    {        
         StartCoroutine(SpawnRoutine());
     }
 
@@ -29,6 +32,7 @@ public class BallSpawner : MonoBehaviour
 
         // 1. Topun Kopyasýný Sahnede Oluþtur
         GameObject newBall = Instantiate(ballPrefab, selectedPoint.position, selectedPoint.rotation);
+        ballTrail = newBall.GetComponentInChildren<TrailRenderer>();
 
         // 2. Kopyanýn materyalini SkinManager'dan alýp deðiþtir (sharedMaterial YERÝNE sadece material)
         if (SkinManager.Instance != null)
@@ -42,6 +46,14 @@ public class BallSpawner : MonoBehaviour
                     spriteRenderer.material = equippedSkin.shopItemMaterial;
                     spriteRenderer.material.color = equippedSkin.shopItemColor;
                 }
+            }
+
+            // 2. Seçili ÝZ (Trail) Skinini Uygula
+            ShopItemSO equippedTrail = SkinManager.Instance.GetEquippedTrailSkin();
+            
+            if (equippedTrail != null && ballTrail != null)
+            {
+                equippedTrail.ApplyToTrailRenderer(ballTrail);
             }
         }
     }

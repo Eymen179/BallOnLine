@@ -2,33 +2,45 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    [Header("Effects")]
+    [Header("Effects & References")]
     public GameObject explosionPrefab;
+    [Tooltip("Boþ býrakýrsan alt objelerdeki (Child) TrailRenderer'ý otomatik bulur.")]
+    public TrailRenderer ballTrail;
 
     private int currentSizeStep = 0;
 
-    // --- YENÝ EKLENEN KISIM: Oyun baþladýðýnda seçili skini kuþanma ---
     private void Start()
     {
-        // SkinManager sahnede var mý kontrol et
+        // Eðer Inspector'dan atanmadýysa alt objedeki Trail'i otomatik bul
+        if (ballTrail == null)
+        {
+            ballTrail = GetComponentInChildren<TrailRenderer>();
+        }
+
         if (SkinManager.Instance != null)
         {
-            // Kayýtlý olan skini getir
-            ShopItemSO equippedSkin = SkinManager.Instance.GetEquippedBallSkin();
-
-            if (equippedSkin != null)
+            // 1. Seçili TOP (Ball) Skinini Uygula
+            ShopItemSO equippedBall = SkinManager.Instance.GetEquippedBallSkin();
+            if (equippedBall != null)
             {
-                // Topun kendi üzerindeki Renderer'ý bul ve materyalini/rengini deðiþtir
                 SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
                 if (spriteRenderer != null)
                 {
-                    spriteRenderer.material = equippedSkin.shopItemMaterial;
-                    spriteRenderer.material.color = equippedSkin.shopItemColor;
+                    if (equippedBall.shopItemMaterial != null)
+                        spriteRenderer.material = equippedBall.shopItemMaterial;
+
+                    spriteRenderer.material.color = equippedBall.shopItemColor;
                 }
+            }
+
+            // 2. Seçili ÝZ (Trail) Skinini Uygula
+            ShopItemSO equippedTrail = SkinManager.Instance.GetEquippedTrailSkin();
+            if (equippedTrail != null && ballTrail != null)
+            {
+                equippedTrail.ApplyToTrailRenderer(ballTrail);
             }
         }
     }
-    // ------------------------------------------------------------------
 
     public void ChangeSize(float multiplier)
     {
@@ -36,29 +48,32 @@ public class BallController : MonoBehaviour
         {
             AudioManager.Instance.PlayAudioClip("Sound_Shrinker");
 
-            // Eðer henüz en küçük boyutta deðilsek (-2'den büyükse)
             if (currentSizeStep > -2)
             {
                 currentSizeStep--;
                 transform.localScale *= multiplier;
+
+                // Top küçüldüðünde arkasýndaki izin kalýnlýðý da orantýlý küçülsün
+                if (ballTrail != null) ballTrail.widthMultiplier *= multiplier;
             }
         }
         else // Büyütücü
         {
             AudioManager.Instance.PlayAudioClip("Sound_Magnifyer");
 
-            // Eðer henüz en büyük boyutta deðilsek (2'den küçükse)
             if (currentSizeStep < 2)
             {
                 currentSizeStep++;
                 transform.localScale *= multiplier;
+
+                // Top büyüdüðünde arkasýndaki izin kalýnlýðý da orantýlý büyüsün
+                if (ballTrail != null) ballTrail.widthMultiplier *= multiplier;
             }
         }
     }
 
     public void Die()
     {
-        // Ölüm efekti, oyunu durdurma veya restart paneli tetiklemeleri
         Debug.Log("Top Patladý!");
 
         if (VibrationManager.Instance != null) VibrationManager.Instance.Vibrate();
@@ -67,36 +82,29 @@ public class BallController : MonoBehaviour
 
         DrawingManager.Instance.isGameActive = false;
 
-        // --- PATLAMA EFEKTÝ ---
         if (explosionPrefab != null)
         {
-            // 1. Patlamayý topun tam olduðu noktada (transform.position) yarat
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-            // 2. Patlama parçacýklarýnýn rengini, topumuzun o anki rengine eþitle (Market uyumu!)
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
             if (ps != null)
             {
-                var main = ps.main; // Particle System'in ana ayarlarýna ulaþýyoruz
+                var main = ps.main;
                 main.startColor = GetComponent<SpriteRenderer>().material.color;
             }
         }
-        // ----------------------
 
         gameObject.SetActive(false);
 
         UIManager.Instance.OpenPanel(UIManager.Instance.pnlDeathMenu);
     }
 
-    // ÇARPIÞMA KONTROLÜ (Sadece 4 satýr!)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Çarptýðýmýz objede IInteractable arayüzü var mý?
         IInteractable interactable = collision.GetComponent<IInteractable>();
 
         if (interactable != null)
         {
-            // Varsa, etkileþimi baþlat ve kendimi (this) gönder
             interactable.Interact(this);
         }
     }

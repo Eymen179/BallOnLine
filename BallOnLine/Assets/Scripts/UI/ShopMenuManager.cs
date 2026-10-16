@@ -76,6 +76,8 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_trailShop, 0.5f);
 
         txtComingSoon.gameObject.SetActive(false);
+
+        if (BallShopManager.Instance != null) BallShopManager.Instance.RefreshShopUI();
     }
     public void Button_TrailShop()
     {
@@ -89,7 +91,9 @@ public class ShopMenuManager : MonoBehaviour
         ButtonSettings(button_lineShop, 0.5f);
         ButtonSettings(button_trailShop, 1f);
 
-        txtComingSoon.gameObject.SetActive(true);
+        txtComingSoon.gameObject.SetActive(false);
+
+        if (TrailShopManager.Instance != null) TrailShopManager.Instance.RefreshShopUI();
     }
     public void Button_LineShop()
     {
