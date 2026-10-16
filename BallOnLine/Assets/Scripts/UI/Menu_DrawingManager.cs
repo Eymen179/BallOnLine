@@ -1,10 +1,12 @@
+using DG.Tweening; // EKLENDÝ: DOTween kütüphanesi
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem; 
-using DG.Tweening; // EKLENDÝ: DOTween kütüphanesi
+using UnityEngine.UI;
+using UnityEngine.EventSystems; // --- 1. YENÝ EKLENDÝ: UI Tespiti Ýçin ---
+
 
 public class Menu_DrawingManager : MonoBehaviour
 {
@@ -57,10 +59,19 @@ public class Menu_DrawingManager : MonoBehaviour
         
         Vector2 pointerScreenPos = Pointer.current.position.ReadValue();
 
+        bool isPointerOverUI = false;
+        if (EventSystem.current != null)
+        {
+            isPointerOverUI = EventSystem.current.IsPointerOverGameObject();
+        }
+
         // 1. Parmaðýmýzla bir kere bastýðýmýzda
         if (isPressedDown && inkAmount > 0f)
         {
             CreateLine(pointerScreenPos);
+
+            // Çizim sesini baþlat
+            if (AudioManager.Instance != null) AudioManager.Instance.StartDrawingSound();
         }
         // 2. Parmaðýmýzý basýlý tuttuðumuzda
         else if (isHeldDown && inkAmount > 0f && currentLine != null)
@@ -71,10 +82,26 @@ public class Menu_DrawingManager : MonoBehaviour
             {
                 UpdateLine(tempFingerPos);
             }
+
+            // --- YENÝ EKLENEN PITCH MATEMATÝÐÝ ---
+            if (AudioManager.Instance != null)
+            {
+                float calculatedPitch = 1f; // Standart pitch (Normal ses)
+
+                // InverseLerp: -11'deyken 0 verir, 11'deyken 1 verir.
+                float normalizedY = Mathf.InverseLerp(-2f, 2f, tempFingerPos.x);
+
+                // Sonra bunu 0.5 (Tok/Kalýn) ile 1.5 (Tiz) arasýna çeviriyoruz.
+                calculatedPitch = Mathf.Lerp(0.5f, 1.5f, normalizedY);
+
+                AudioManager.Instance.UpdateDrawingPitch(calculatedPitch);
+            }
         }
         // 3. EKLENEN KISIM: Parmaðýmýzý ekrandan kaldýrdýðýmýzda
         else if (isReleased && currentLine != null)
         {
+            if (AudioManager.Instance != null) AudioManager.Instance.StopDrawingSound();
+
             // Çizim bittiði an erime/yok olma iþlemini baþlatýyoruz
             FadeAndDestroyLine(currentLine);
             

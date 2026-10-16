@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip drawingLoopClip;      // Çalýnacak loop neon sesi
 
     [Tooltip("Çizim sesinin maksimum yüksekliði (0 ile 1 arasý)")]
-    public float maxDrawingVolume = 0.35f; // --- 2. YENÝ EKLENDÝ ---
+    public float maxDrawingVolume = 0.15f; // --- 2. YENÝ EKLENDÝ ---
 
     // --- SES KONTROL DEÐÝÞKENÝ ---
     public bool isSoundOn = true;
