@@ -1,3 +1,4 @@
+using DTT.UI.ProceduralUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,12 @@ public class ShopItemUI : MonoBehaviour
     public TextMeshProUGUI txtCostCanBuy;      // BtnCanBuy'ýn içindeki Text
     public TextMeshProUGUI txtCostCannotBuy;   // BtnCanNotBuy'ýn içindeki Text
 
+    public Gradient lightBlueGradient;
+    public Gradient darkBlueGradient;
+    public Gradient greenGradient;
+    public Gradient redGradient;
+    public Gradient grayGradient;
+
     private void Awake()
     {
         if (btnCanBuy != null)
@@ -37,6 +44,8 @@ public class ShopItemUI : MonoBehaviour
             Button btnDarkBlue = btnUse.GetComponent<Button>();
             if (btnDarkBlue != null) btnDarkBlue.onClick.AddListener(OnButtonClicked);
         }
+
+        gameObject.GetComponent<GradientEffect>().Batching = false; // GradientEffect'in otomatik olarak Batchlemeye çalýþmasýný engelle
     }
 
     public void Setup(ShopItemState state)
@@ -70,30 +79,35 @@ public class ShopItemUI : MonoBehaviour
         switch (state)
         {
             case ShopItemState.Locked_Gray:
+                gameObject.GetComponent<GradientEffect>().Gradient = grayGradient;
                 imgBall.gameObject.SetActive(false);
                 imgLocked.gameObject.SetActive(true);
                 if (btnLocked != null) btnLocked.SetActive(true);
                 break;
 
             case ShopItemState.CannotBuy_Red:
+                gameObject.GetComponent<GradientEffect>().Gradient = redGradient;
                 imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
                 if (btnCanNotBuy != null) btnCanNotBuy.SetActive(true);
                 break;
 
             case ShopItemState.CanBuy_Green:
+                gameObject.GetComponent<GradientEffect>().Gradient = greenGradient;
                 imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
                 if (btnCanBuy != null) btnCanBuy.SetActive(true);
                 break;
 
             case ShopItemState.Equipped_LightBlue:
+                gameObject.GetComponent<GradientEffect>().Gradient = lightBlueGradient;
                 imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
                 if (btnUsing != null) btnUsing.SetActive(true);
                 break;
 
             case ShopItemState.Owned_DarkBlue:
+                gameObject.GetComponent<GradientEffect>().Gradient = darkBlueGradient;
                 imgBall.gameObject.SetActive(true);
                 imgLocked.gameObject.SetActive(false);
                 if (btnUse != null) btnUse.SetActive(true);

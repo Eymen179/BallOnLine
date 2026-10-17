@@ -18,8 +18,8 @@ MonoBehaviour:
   isInkLimited: 1
   maxInkAmount: 80
   inkBallAmount: 10
-  FreezeStartCount: 1
-  ShieldStartCount: 0
+  FreezeStartCount: 0
+  ShieldStartCount: 1
   FreezeRefillCount: 1
   ShieldRefillCount: 1
   magnifyMultiplier: 1.5
