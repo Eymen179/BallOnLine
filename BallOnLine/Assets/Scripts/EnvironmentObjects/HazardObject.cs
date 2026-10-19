@@ -53,6 +53,51 @@ public class HazardItem : MonoBehaviour, IInteractable
             }
         }
     }
+    // --- 1. YENÝ EKLENEN: TOP DÝKENÝN ÜZERÝNDEYKEN KALKAN BÝTERSE ---
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (hazardType == HazardType.Spike)
+        {
+            BallController ball = collision.gameObject.GetComponent<BallController>();
+            if (ball != null)
+            {
+                // Temas devam ederken kalkan kapandýðý an topu patlat
+                bool hasShield = ButtonSkillManager.Instance != null && ButtonSkillManager.Instance.isShieldActive;
+                if (!hasShield)
+                {
+                    IsSpikeTrigger(true);
+                    ball.Die();
+                }
+            }
+        }
+    }
+
+    // --- 2. YENÝ EKLENEN: TOP DÝKENDEN AYRILDIÐINDA TEKRAR TRIGGER YAP ---
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (hazardType == HazardType.Spike)
+        {
+            BallController ball = collision.gameObject.GetComponent<BallController>();
+            if (ball != null)
+            {
+                // Top uzaklaþtýðý an dikeni varsayýlan ölümcül trigger haline geri çevir
+                IsSpikeTrigger(true);
+            }
+        }
+    }
+
+    // --- 3. YENÝ EKLENEN: GÜVENLÝK KÝLÝDÝ (Katý dikene kalkansýz temas) ---
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (hazardType == HazardType.Spike)
+        {
+            BallController ball = collision.gameObject.GetComponent<BallController>();
+            if (ball != null)
+            {
+                Interact(ball);
+            }
+        }
+    }
 
     public void IsSpikeTrigger(bool isTrigger)
     {
