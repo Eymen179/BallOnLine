@@ -22,11 +22,6 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
-
     // "bool updateUI = true" eklendi. Varsayýlan olarak UI'ý günceller.
     public void UpdateCoinAmount(int amount, bool updateUI = true)
     {

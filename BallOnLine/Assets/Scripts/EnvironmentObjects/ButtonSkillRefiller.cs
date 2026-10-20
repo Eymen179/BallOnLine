@@ -5,21 +5,7 @@ public class ButtonSkillRefiller : MonoBehaviour, IInteractable
 {
     public SkillType skillType = SkillType.Freeze;
 
-    private int refillAmount = 1;
-
-    private void Start()
-    {
-        // Deðerleri LevelManager üzerinden okuyoruz
-        switch (skillType)
-        {
-            case SkillType.Freeze:
-                refillAmount = LevelManager.Instance.currentLevel.FreezeRefillCount;
-                break;
-            case SkillType.Shield:
-                refillAmount = LevelManager.Instance.currentLevel.ShieldRefillCount;
-                break;
-        }
-    }
+    public int refillAmount = 1;
 
     public void Interact(BallController ball)
     {

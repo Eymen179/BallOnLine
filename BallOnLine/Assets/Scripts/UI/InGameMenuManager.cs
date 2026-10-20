@@ -10,11 +10,6 @@ public class InGameMenuManager : MonoBehaviour
 
     private int button_TimeTableCounter = 0;
 
-    private void Start()
-    {
-
-    }
-
     /*Pause Menu - Win Menu - Death Menu*/
     public void Button_RestartLevel()
     {

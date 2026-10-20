@@ -58,11 +58,6 @@ public class ShopMenuManager : MonoBehaviour
         if (AdManager.Instance != null) AdManager.Instance.ShowBanner();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Button_BallShop()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");

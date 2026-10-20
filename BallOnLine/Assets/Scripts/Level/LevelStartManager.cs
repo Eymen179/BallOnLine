@@ -151,52 +151,6 @@ public class LevelStartManager : MonoBehaviour
 
         cameraFollowTarget.position = newPos;
     }
-
-    /*public void StartLevelPlay()
-    {
-        AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
-
-        isPanningMode = false;
-
-        vcamPan.SetActive(false);
-        vcamFollow.SetActive(true);
-
-        if (UIManager.Instance != null && UIManager.Instance.btnStartLevel != null)
-        {
-            UIManager.Instance.btnStartLevel.SetActive(false);
-
-            // Kodunda olan alt UI engelleyiciyi güvenli bir þekilde kapatýyoruz
-            if (UIManager.Instance.pnlBottomUIBlocker != null)
-                UIManager.Instance.pnlBottomUIBlocker.SetActive(false);
-            if(UIManager.Instance.btnContinue != null)
-                UIManager.Instance.btnContinue.gameObject.SetActive(true);
-        }
-
-        if (ballRb != null) ballRb.simulated = true;
-        if (drawingManager != null) drawingManager.isGameActive = true;
-
-        foreach (var obj in tutorialLines)
-        {
-            if(tutorialLines.Count() > 0)
-            {
-                if (obj != null)
-                {
-                    obj.gameObject.SetActive(false);
-                }
-            }
-        }
-        imgTutorial.gameObject.SetActive(false);
-
-        // --- EKLENEN KISIM: TÝMER'I BAÞLAT ---
-        if (TimerManager.Instance != null)
-        {
-            TimerManager.Instance.StartTimer();
-        }
-
-        //Zaman Tablosu
-        UIManager.Instance.pnlTimeTable.SetActive(false);
-        UIManager.Instance.btnTimeTable.gameObject.SetActive(false);
-    }*/
     public void StartLevelPlay()
     {
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");

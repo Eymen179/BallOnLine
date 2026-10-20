@@ -30,7 +30,6 @@ public class Menu_DrawingManager : MonoBehaviour
     public float inkDecreaseRate = -0.2f; 
     public TextMeshProUGUI inkAmountText;
 
-
     private void Awake()
     {
         if (Instance == null) Instance = this;

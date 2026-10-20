@@ -14,8 +14,6 @@ public class Level : ScriptableObject
 
     public int FreezeStartCount = 3;
     public int ShieldStartCount = 3;
-    public int FreezeRefillCount = 1;
-    public int ShieldRefillCount = 1;
 
     public float magnifyMultiplier = 1.5f;
     public float shrinkMultiplier = 0.5f;

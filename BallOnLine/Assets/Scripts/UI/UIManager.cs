@@ -62,7 +62,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI txtTarget2Stars;
     public TextMeshProUGUI txtTarget1Star;
 
-
     private void Awake()
     {
         if (Instance == null)

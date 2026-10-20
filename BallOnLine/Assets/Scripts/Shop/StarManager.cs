@@ -21,11 +21,6 @@ public class StarManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
-
     // Portal scriptinden çaðrýlacak metot
     public void SaveLevelStars(int levelIndex, int earnedStars)
     {

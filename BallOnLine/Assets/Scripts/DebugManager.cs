@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 public class DebugManager : MonoBehaviour
 {
     [SerializeField] private InputActionReference restart;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
