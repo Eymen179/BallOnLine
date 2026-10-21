@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daaf321716bac740a661736fda8c723, type: 3}
   m_Name: Level_Test
   m_EditorClassIdentifier: 
-  levelName: Level1
+  levelName: Level26_Test
   levelIndex: -1
   axis: 1
   isInkLimited: 1
@@ -20,8 +20,10 @@ MonoBehaviour:
   inkBallAmount: 10
   FreezeStartCount: 3
   ShieldStartCount: 3
-  FreezeRefillCount: 7
-  ShieldRefillCount: 4
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.5
   shootingSpeed: 1
+  fireInterval: 1.5
+  timeForThreeStars: 10
+  timeForTwoStars: 20
+  timeForOneStar: 30
