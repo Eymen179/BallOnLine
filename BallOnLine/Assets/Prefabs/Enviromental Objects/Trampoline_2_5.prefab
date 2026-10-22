@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5253275434842993157}
   - component: {fileID: 4882568956319872650}
   m_Layer: 0
-  m_Name: Trampoline
+  m_Name: Trampoline_2_5
   m_TagString: Trampoline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 1483b20d97c95b2439cd41545108a016, type: 2}
+  m_Material: {fileID: 6200000, guid: 0031d5aaeb3289842b9a5b8754723292, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
