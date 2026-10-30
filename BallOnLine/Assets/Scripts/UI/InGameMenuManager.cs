@@ -86,6 +86,9 @@ public class InGameMenuManager : MonoBehaviour
             // 3'ten 1'e doðru geri sayým
             for (int i = 3; i > 0; i--)
             {
+                AudioManager.Instance.audioSource.pitch = 1f + (3 - i) * 0.1f; // Her saniye biraz daha tiz bir ses
+                AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
                 UIManager.Instance.txtCountdown.text = i.ToString();
 
                 UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
@@ -94,6 +97,8 @@ public class InGameMenuManager : MonoBehaviour
 
                 yield return new WaitForSeconds(0.5f);
             }
+            AudioManager.Instance.audioSource.pitch = 1.0f;
+            AudioManager.Instance.PlayAudioClip("Sound_StartLevel");
 
             // Süre bitince GO! yazýsý
             UIManager.Instance.txtCountdown.text = "GO!";

@@ -181,6 +181,9 @@ public class LevelStartManager : MonoBehaviour
             // 3'ten 1'e doðru geri sayým
             for (int i = 3; i > 0; i--)
             {
+                AudioManager.Instance.audioSource.pitch = 1f + (3 - i) * 0.1f; // Her saniye biraz daha tiz bir ses
+                AudioManager.Instance.PlayAudioClip("Sound_ButtonClick");
+
                 UIManager.Instance.txtCountdown.text = i.ToString();
 
                 // UIManager'daki tarzýmýza uygun (OutBack) tatlý bir zýplama efekti
@@ -189,11 +192,14 @@ public class LevelStartManager : MonoBehaviour
 
                 yield return new WaitForSeconds(1f);
             }
+            AudioManager.Instance.audioSource.pitch = 1.0f;
+            AudioManager.Instance.PlayAudioClip("Sound_StartLevel");
 
             // Süre bitince GO! yazýsý
             UIManager.Instance.txtCountdown.text = "GO!";
             UIManager.Instance.txtCountdown.transform.localScale = Vector3.zero;
             UIManager.Instance.txtCountdown.transform.DOScale(7f, 0.3f).SetEase(Ease.OutBack);
+            
         }
 
         // --- ASIL OYUN BAÞLANGICI ---
