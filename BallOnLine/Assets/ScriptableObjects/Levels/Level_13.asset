@@ -20,12 +20,10 @@ MonoBehaviour:
   inkBallAmount: 10
   FreezeStartCount: 0
   ShieldStartCount: 0
-  FreezeRefillCount: 1
-  ShieldRefillCount: 1
   magnifyMultiplier: 2
   shrinkMultiplier: 0.75
   shootingSpeed: 1
   fireInterval: 1.5
-  timeForThreeStars: 7
-  timeForTwoStars: 12
-  timeForOneStar: 18
+  timeForThreeStars: 9
+  timeForTwoStars: 15
+  timeForOneStar: 20
