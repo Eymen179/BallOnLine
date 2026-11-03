@@ -10,9 +10,11 @@ public class LevelMenuManager : MonoBehaviour
 
     [Header("Tüm Level Butonlarý (Sýrasýyla 1'den 25'e)")]
     public Button[] levelButtons;
+    public static int totalLevels;
 
     void Start()
     {
+        totalLevels = levelButtons.Length;
         // UI Güncellemesi (Yöneticilerden güncel bilgileri çek)
         if (CoinManager.Instance != null && txtTotalCoins != null)
         {

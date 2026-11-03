@@ -10,6 +10,8 @@ public class InGameMenuManager : MonoBehaviour
 
     private int button_TimeTableCounter = 0;
 
+    private int totalLevelCount = LevelMenuManager.totalLevels;
+
     /*Pause Menu - Win Menu - Death Menu*/
     public void Button_RestartLevel()
     {
@@ -23,7 +25,7 @@ public class InGameMenuManager : MonoBehaviour
         AudioManager.Instance.PlayAudioClip("Sound_ButtonClick2");
 
         int nextLevelNum = LevelManager.Instance.currentLevel.levelIndex + 1;
-        string nextSceneName = (nextLevelNum <= 25 && nextLevelNum > 0) ? "Level_" + nextLevelNum : "MainMenu";
+        string nextSceneName = (nextLevelNum <= totalLevelCount && nextLevelNum > 0) ? "Level_" + nextLevelNum : "MainMenu";
 
         if (AdManager.Instance != null)
         {

@@ -20,7 +20,6 @@ public class MainMenuManager : MonoBehaviour
     private int vibrationButtonCounter = 0;
 
     public TextMeshProUGUI txtComingSoon;
-    public string comingSoonSceneName = "Level_26";
 
     void Start()
     {
@@ -52,7 +51,7 @@ public class MainMenuManager : MonoBehaviour
 
         string unlockedLevelString = "Level_" + unlockedLevel;
 
-        if(unlockedLevelString != comingSoonSceneName)
+        if(unlockedLevelString != SceneController.Instance.comingSoonSceneName)
         {
             // Oyuna girerken alt bant reklamýný gizle
             if (AdManager.Instance != null) AdManager.Instance.HideBanner();
