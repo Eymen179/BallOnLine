@@ -7,7 +7,7 @@ public class SceneController : MonoBehaviour
 
     public MainMenuManager mainMenuManager;
 
-    public string comingSoonSceneName = "Level_26";
+    public string comingSoonSceneName = "Level_51";
     private void Awake()
     {
         if (Instance == null)
