@@ -115,7 +115,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 0031d5aaeb3289842b9a5b8754723292, type: 2}
+  m_Material: {fileID: 6200000, guid: f433e67c637c4084693c452f90ac5a56, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

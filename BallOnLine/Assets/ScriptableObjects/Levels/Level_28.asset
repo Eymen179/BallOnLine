@@ -15,14 +15,14 @@ MonoBehaviour:
   levelName: Level_28
   levelIndex: 28
   axis: 1
-  isInkLimited: 0
+  isInkLimited: 1
   maxInkAmount: 80
   inkBallAmount: 10
   FreezeStartCount: 1
   ShieldStartCount: 0
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.75
-  shootingSpeed: 5
+  shootingSpeed: 7.5
   fireInterval: 2
   timeForThreeStars: 14
   timeForTwoStars: 20

@@ -151,7 +151,7 @@ public class DrawingManager : MonoBehaviour
     {
         if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
         {
-            newFingerPos.x = Mathf.Clamp(newFingerPos.x, -3.5f, 100f);
+            newFingerPos.x = Mathf.Clamp(newFingerPos.x, -50f, 100f);
         }
         else if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
         {

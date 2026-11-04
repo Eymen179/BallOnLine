@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level_32
   levelIndex: 32
-  axis: 1
+  axis: 0
   isInkLimited: 0
   maxInkAmount: 80
   inkBallAmount: 10

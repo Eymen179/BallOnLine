@@ -72,7 +72,7 @@ Material:
     m_Floats:
     - _ColorCount: 5
     - _EnableExternalAlpha: 0
-    - _GlowIntensity: 3
+    - _GlowIntensity: 2.5
     - _NoiseScale: 0.2
     - _PanSpeed: 0.75
     - _ZWrite: 0
