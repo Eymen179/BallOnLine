@@ -15,11 +15,11 @@ MonoBehaviour:
   levelName: Level_37
   levelIndex: 37
   axis: 1
-  isInkLimited: 0
-  maxInkAmount: 80
+  isInkLimited: 1
+  maxInkAmount: 50
   inkBallAmount: 10
-  FreezeStartCount: 1
-  ShieldStartCount: 0
+  FreezeStartCount: 2
+  ShieldStartCount: 1
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.75
   shootingSpeed: 5
