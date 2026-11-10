@@ -15,15 +15,16 @@ MonoBehaviour:
   levelName: Level_42
   levelIndex: 42
   axis: 1
+  isLineRigidbodyActive: 1
   isInkLimited: 0
   maxInkAmount: 80
   inkBallAmount: 10
   FreezeStartCount: 1
-  ShieldStartCount: 0
+  ShieldStartCount: 1
   magnifyMultiplier: 1.5
   shrinkMultiplier: 0.75
   shootingSpeed: 5
   fireInterval: 2
-  timeForThreeStars: 14
-  timeForTwoStars: 20
-  timeForOneStar: 30
+  timeForThreeStars: 20
+  timeForTwoStars: 30
+  timeForOneStar: 40

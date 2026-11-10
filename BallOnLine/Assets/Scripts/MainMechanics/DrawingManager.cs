@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem; // Yeni Input System kütüphanesi eklendi
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // --- 1. YENÝ EKLENDÝ: UI Tespiti Ýçin ---
 
 public class DrawingManager : MonoBehaviour
 {
@@ -17,19 +15,19 @@ public class DrawingManager : MonoBehaviour
 
     private LineRenderer lineRenderer;
     private EdgeCollider2D edgeCollider;
+    private Rigidbody2D currentRb;
     public List<Vector2> fingerPositions;
 
-    public float minPointDistance = 0.25f; // Bu deðeri Inspector'dan line kalýnlýðýna göre artýrýp azaltabilirsin.
+    public float minPointDistance = 0.25f;
 
     [Header("Ink Settings")]
     public int lineCount = 0;
     public static float inkAmount;
     public static float maxInkAmount = 100f;
-    public float inkDecreaseRate = -0.2f; // Çizim sýrasýnda mürekkep azalým hýzý
+    public float inkDecreaseRate = -0.2f;
     public TextMeshProUGUI inkAmountText;
 
     [Header("Game State")]
-    // Butona basýldýðýnda bu deðeri GameManager veya UI üzerinden 'true' yapmalýsýn.
     public bool isGameActive = false;
 
     private void Awake()
@@ -37,6 +35,7 @@ public class DrawingManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+
     private void Start()
     {
         maxInkAmount = LevelManager.Instance.currentLevel.maxInkAmount;
@@ -45,7 +44,7 @@ public class DrawingManager : MonoBehaviour
 
     void Update()
     {
-        // Level donuk durumdayken çizim yapýlmasýný engeller
+        // 1. Oyun baþlamadýysa çizimi engelle
         if (!isGameActive)
         {
             if (AudioManager.Instance != null) AudioManager.Instance.StopDrawingSound();
@@ -58,55 +57,40 @@ public class DrawingManager : MonoBehaviour
             inkAmountText.text = "% " + Mathf.CeilToInt(inkAmount).ToString();
         }
 
-        // Eðer sistemde herhangi bir iþaretçi (fare, dokunmatik vb.) yoksa metodu sonlandýr
         if (Pointer.current == null) return;
 
-        // Yeni Input System ile basýlma ve pozisyon verilerini okuma
         bool isPressedDown = Pointer.current.press.wasPressedThisFrame;
         bool isHeldDown = Pointer.current.press.isPressed;
         bool isReleased = Pointer.current.press.wasReleasedThisFrame;
 
         Vector2 pointerScreenPos = Pointer.current.position.ReadValue();
 
-
-        bool isPointerOverUI = false;
-        if (EventSystem.current != null)
-        {
-            isPointerOverUI = EventSystem.current.IsPointerOverGameObject();
-        }
-
-        // Parmaðýmýzla bir kere bastýðýmýzda yapýlacak iþlemler
+        // 2. Çizim Baþlangýcý (UI kilidi kaldýrýldý)
         if (isPressedDown && inkAmount > 0f)
         {
             CreateLine(pointerScreenPos);
             UpdateInkAmount(inkDecreaseRate);
 
-            // Çizim sesini baþlat
             if (AudioManager.Instance != null) AudioManager.Instance.StartDrawingSound();
         }
-        // Parmaðýmýzý basýlý tuttuðumuzda yapýlacak iþlemler
-        else if (isHeldDown && inkAmount > 0f)
+        // 3. Çizim Devamý
+        else if (isHeldDown && inkAmount > 0f && currentLine != null)
         {
             Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(pointerScreenPos);
 
-            // Çizgiler arasýndaki mesafe kontrolü (Çok sýk nokta eklememek için)
             if (fingerPositions.Count > 0 && Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count - 1]) > minPointDistance)
             {
                 UpdateLine(tempFingerPos);
                 UpdateInkAmount(inkDecreaseRate);
             }
 
-            // --- YENÝ EKLENEN PITCH MATEMATÝÐÝ ---
             if (AudioManager.Instance != null)
             {
-                float calculatedPitch = 1f; // Standart pitch (Normal ses)
+                float calculatedPitch = 1f;
 
                 if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
                 {
-                    // InverseLerp: -11'deyken 0 verir, 11'deyken 1 verir.
                     float normalizedY = Mathf.InverseLerp(-4f, 4f, tempFingerPos.x);
-
-                    // Sonra bunu 0.5 (Tok/Kalýn) ile 1.5 (Tiz) arasýna çeviriyoruz.
                     calculatedPitch = Mathf.Lerp(0.5f, 1.5f, normalizedY);
                 }
                 else if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
@@ -118,9 +102,11 @@ public class DrawingManager : MonoBehaviour
                 AudioManager.Instance.UpdateDrawingPitch(calculatedPitch);
             }
         }
-        // Mürekkep bittiyse veya parmak çekildiyse sesi durdur
-        else if (isReleased || inkAmount <= 0f)
+        // 4. Çizim Bitiþi (Býrakýldýðý an yerçekimini devreye sok)
+        else if ((isReleased || inkAmount <= 0f) && currentLine != null)
         {
+            FinishCurrentLine();
+
             if (AudioManager.Instance != null) AudioManager.Instance.StopDrawingSound();
         }
     }
@@ -133,42 +119,111 @@ public class DrawingManager : MonoBehaviour
 
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider = currentLine.GetComponent<EdgeCollider2D>();
+        currentRb = currentLine.GetComponent<Rigidbody2D>();
+
+        // Çizim esnasýnda koordinat kaymasýný önlemek için standart dünya uzayýnda baþlar
+        if (lineRenderer != null)
+        {
+            lineRenderer.useWorldSpace = true;
+        }
+
+        // Çizerken fizik hareket etmesin
+        if (currentRb != null)
+        {
+            currentRb.bodyType = RigidbodyType2D.Kinematic;
+            currentRb.linearVelocity = Vector2.zero;
+            currentRb.angularVelocity = 0f;
+        }
 
         fingerPositions.Clear();
 
-        // Ekrana ilk dokunulan noktayý Dünya (World) koordinatlarýna çevirme
         Vector2 startPos = Camera.main.ScreenToWorldPoint(screenPos);
         fingerPositions.Add(startPos);
         fingerPositions.Add(startPos);
 
-        lineRenderer.SetPosition(0, fingerPositions[0]);
-        lineRenderer.SetPosition(1, fingerPositions[1]);
+        if (lineRenderer != null)
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, fingerPositions[0]);
+            lineRenderer.SetPosition(1, fingerPositions[1]);
+        }
 
-        edgeCollider.points = fingerPositions.ToArray();
+        if (edgeCollider != null)
+        {
+            edgeCollider.points = fingerPositions.ToArray();
+        }
     }
 
     void UpdateLine(Vector2 newFingerPos)
     {
-        if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
+        if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.XAxis)
         {
             newFingerPos.x = Mathf.Clamp(newFingerPos.x, -50f, 100f);
         }
-        else if(LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
+        else if (LevelManager.Instance.currentLevel.axis == Level.levelAxis.YAxis)
         {
             newFingerPos.x = Mathf.Clamp(newFingerPos.x, -11f, 11f);
         }
-        // Çizimin ekran dýþýna taþmasýný engelleme
+
         fingerPositions.Add(newFingerPos);
 
-        lineRenderer.positionCount++;
-        lineRenderer.SetPosition(lineRenderer.positionCount - 1, newFingerPos);
+        if (lineRenderer != null)
+        {
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(lineRenderer.positionCount - 1, newFingerPos);
+        }
 
-        edgeCollider.points = fingerPositions.ToArray();
+        if (edgeCollider != null)
+        {
+            edgeCollider.points = fingerPositions.ToArray();
+        }
+    }
+
+    private void FinishCurrentLine()
+    {
+        if (LevelManager.Instance != null && LevelManager.Instance.currentLevel != null)
+        {
+            // Ýlgili levelde çizgilere yerçekimi etki edecekse
+            if (LevelManager.Instance.currentLevel.isLineRigidbodyActive && currentRb != null)
+            {
+                // 1. Geometrik merkezi (aðýrlýk merkezini) hesapla
+                Vector2 centroid = Vector2.zero;
+                for (int i = 0; i < fingerPositions.Count; i++)
+                {
+                    centroid += fingerPositions[i];
+                }
+                if (fingerPositions.Count > 0)
+                {
+                    centroid /= fingerPositions.Count;
+                }
+
+                // 2. Çizgiyi objenin yerel merkezine taþýyýp Transform'u oraya yerleþtir (Kaymayý önler)
+                currentLine.transform.position = centroid;
+
+                Vector2[] localColliderPoints = new Vector2[fingerPositions.Count];
+                for (int i = 0; i < fingerPositions.Count; i++)
+                {
+                    Vector2 localPt = fingerPositions[i] - centroid;
+                    localColliderPoints[i] = localPt;
+                    lineRenderer.SetPosition(i, localPt);
+                }
+
+                // Görseli yerel uzaya alarak GameObject ile birlikte düþmesini saðla
+                lineRenderer.useWorldSpace = false;
+                edgeCollider.points = localColliderPoints;
+
+                currentRb.centerOfMass = Vector2.zero;
+                currentRb.bodyType = RigidbodyType2D.Dynamic;
+            }
+        }
+
+        currentLine = null;
+        currentRb = null;
     }
 
     public void UpdateDrawingProgressBar()
     {
-        if (UIManager.Instance.inkAmountBar != null)
+        if (UIManager.Instance != null && UIManager.Instance.inkAmountBar != null)
         {
             UIManager.Instance.inkAmountBar.value = inkAmount / maxInkAmount;
         }
@@ -181,7 +236,7 @@ public class DrawingManager : MonoBehaviour
             inkAmount += addedAmount;
         }
 
-        if(inkAmount > maxInkAmount)
+        if (inkAmount > maxInkAmount)
         {
             inkAmount = maxInkAmount;
         }

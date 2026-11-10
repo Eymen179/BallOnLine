@@ -8,6 +8,7 @@ public class Level : ScriptableObject
 
     public levelAxis axis = levelAxis.YAxis;
 
+    public bool isLineRigidbodyActive = false;
     public bool isInkLimited = false;
     public float maxInkAmount = 100f;
     public float inkBallAmount = 10f;

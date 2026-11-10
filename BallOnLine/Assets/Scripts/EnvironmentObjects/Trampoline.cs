@@ -20,7 +20,6 @@ public class Trampoline : MonoBehaviour
     {
         // Çarpan obje top mu diye kontrol ediyoruz
         BallController ball = collision.gameObject.GetComponent<BallController>();
-
         if (ball != null)
         {
             AudioManager.Instance.PlayAudioClip("Sound_Trampoline");
@@ -36,6 +35,16 @@ public class Trampoline : MonoBehaviour
 
             // 2. DOTWEEN ÝLE YAYLANMA (PUNCH) ANÝMASYONU:
             // Belirlenen yönde ileri fýrlayýp geri sekerek yaylanma hissi verir.
+            transform.DOPunchPosition(punchDirection, duration, vibrato, elasticity);
+        }
+
+        EdgeCollider2D line = collision.gameObject.GetComponent<EdgeCollider2D>();
+        if (line != null && LevelManager.Instance.currentLevel.isLineRigidbodyActive)
+        {
+            AudioManager.Instance.PlayAudioClip("Sound_Trampoline");
+            transform.DOComplete();
+            Vector2 impactNormal = collision.GetContact(0).normal;
+            Vector3 punchDirection = (Vector3)(-impactNormal) * punchDistance;
             transform.DOPunchPosition(punchDirection, duration, vibrato, elasticity);
         }
     }
