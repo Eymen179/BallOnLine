@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level_44
   levelIndex: 44
-  axis: 1
-  isInkLimited: 0
+  axis: 0
+  isLineRigidbodyActive: 1
+  isInkLimited: 1
   maxInkAmount: 80
   inkBallAmount: 10
   FreezeStartCount: 1
@@ -24,6 +25,6 @@ MonoBehaviour:
   shrinkMultiplier: 0.75
   shootingSpeed: 5
   fireInterval: 2
-  timeForThreeStars: 14
-  timeForTwoStars: 20
-  timeForOneStar: 30
+  timeForThreeStars: 20
+  timeForTwoStars: 30
+  timeForOneStar: 40
