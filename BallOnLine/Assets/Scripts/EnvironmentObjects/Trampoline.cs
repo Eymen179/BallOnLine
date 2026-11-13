@@ -41,7 +41,7 @@ public class Trampoline : MonoBehaviour
         EdgeCollider2D line = collision.gameObject.GetComponent<EdgeCollider2D>();
         if (line != null && LevelManager.Instance.currentLevel.isLineRigidbodyActive)
         {
-            AudioManager.Instance.PlayAudioClip("Sound_Trampoline");
+            //AudioManager.Instance.PlayAudioClip("Sound_Trampoline");
             transform.DOComplete();
             Vector2 impactNormal = collision.GetContact(0).normal;
             Vector3 punchDirection = (Vector3)(-impactNormal) * punchDistance;
