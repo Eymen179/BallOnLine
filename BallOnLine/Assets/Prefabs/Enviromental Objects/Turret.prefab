@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 3888461612625262337, guid: a2dee8c396b41da45833505aefb0c05e, type: 3}
   m_Color: {r: 0.8037735, g: 0.8037735, b: 0.8037735, a: 1}
   m_FlipX: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2775303110387966450, guid: 9b1e50fc877423b429d0bca179373e45, type: 3}
   recoilDistance: 0.3
   recoilDuration: 0.5
+  initialDelay: 0
 --- !u!60 &3718392867456895176
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -271,7 +272,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -20
   m_Sprite: {fileID: -5550914742150410354, guid: 5354af62c0baa3e4885a82d901b4ec9e, type: 3}
   m_Color: {r: 1, g: 0, b: 0.22352941, a: 1}
   m_FlipX: 0
